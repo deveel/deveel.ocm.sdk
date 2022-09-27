@@ -1,0 +1,65 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        dotnet: [6.0.x]
+        
+    runs-on: ${{matrix.os}}
+
+    steps:
+    
+      - name: Setup .NET ${{matrix.dotnet}}
+        uses: actions/setup-dotnet@v2.1.1
+        with:
+          dotnet-version: ${{matrix.dotnet}}
+
+      - name: "Generate the .NET Management Client"
+        run: |
+          autorest --input-file=./openapi/${{inputs.artifactName}} `
+          --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
+          --project-folder=./dotnet/src/Deveel.Ocm.Management.Client `
+          --namespace=Deveel.Messaging.Management `
+          --csharp `
+          --add-credentials `
+          --sync-methods=all `
+          --override-client-name=ManagementClient `
+          --use-datetimeoffset `
+          --head-as-boolean `
+          --public-clients `
+          --version=3.0.6349 `
+          --v3
+          
+      - name: "Generate the .NET Messaging Client"
+        run: |
+          autorest --input-file=./openapi/${{inputs.artifactName}} `
+          --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging `
+          --project-folder=./dotnet/src/Deveel.Ocm.Client `
+          --namespace=Deveel.Messaging `
+          --csharp `
+          --add-credentials `
+          --sync-methods=all `
+          --override-client-name=MessagingClient `
+          --use-datetimeoffset `
+          --head-as-boolean `
+          --public-clients `
+          --version=3.0.6349 `
+          --v3
+
+      - name: Restore the .NET Dependencies
+        run: dotnet restore Deveel.Ocm.Sdk.sln
+      
+      - name: Build the .NET SDK
+        run: dotnet build ./dotnet/Deveel.Ocm.Sdk.sln -c Release --no-restore
+        
+      - name: Test
+        run: dotnet test ./test/**/*.csproj --no-build --verbosity normal -c Release
