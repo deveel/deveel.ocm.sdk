@@ -1,0 +1,66 @@
+name: SDK CI Build
+
+# Controls when the workflow will run
+on:
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    
+      - name: Setup .NET ${{matrix.dotnet}}
+        uses: actions/setup-dotnet@v2.1.1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: "Generate the .NET Management Client"
+        run: |
+          autorest --input-file=./openapi/${{inputs.artifactName}} `
+          --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
+          --project-folder=./dotnet/src/Deveel.Ocm.Management.Client `
+          --namespace=Deveel.Messaging.Management `
+          --csharp `
+          --add-credentials `
+          --sync-methods=all `
+          --override-client-name=ManagementClient `
+          --use-datetimeoffset `
+          --head-as-boolean `
+          --public-clients `
+          --version=3.0.6349 `
+          --v3
+          
+      - name: "Generate the .NET Messaging Client"
+        run: |
+          autorest --input-file=./openapi/${{inputs.artifactName}} `
+          --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging `
+          --project-folder=./dotnet/src/Deveel.Ocm.Client `
+          --namespace=Deveel.Messaging `
+          --csharp `
+          --add-credentials `
+          --sync-methods=all `
+          --override-client-name=MessagingClient `
+          --use-datetimeoffset `
+          --head-as-boolean `
+          --public-clients `
+          --version=3.0.6349 `
+          --v3
+  
+      - name: Restore the .NET Dependencies
+        run: dotnet restore Deveel.Ocm.Sdk.sln
+      
+      - name: Build the .NET SDK
+        run: dotnet build ./dotnet/Deveel.Ocm.Sdk.sln -c Release --no-restore
+        
+      - name: Test
+        run: dotnet test ./test/**/*.csproj --no-build --verbosity normal -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.XUnit]*" /p:Exclude="[*.Client]*"
+        
+      - name: Pack Common Libraries
+        run: dotnet pack Deveel.Ocm.Sdk.sln -c Release --no-restore --no-build --include-symbols --version-suffix $GITHUB_RUN_ID --output ./nuget
+
+      - name: Push Packages to GitHub NuGet
+        run: dotnet nuget push ./nuget/**/*.nupkg --skip-duplicate --api-key ${{secrets.DEVEEL_NUGET_TOKEN}} --source "Deveel GitHub"
