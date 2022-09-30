@@ -6,6 +6,17 @@ on:
     branches: [ "main" ]
 
   workflow_dispatch:
+    inputs:
+      env:
+        type: string
+        description: "The environment of the client"
+        required: false
+        default: dev
+      version:
+        type: string
+        description: "The version of the client"
+        required: false
+        default: "v1"
 
 jobs:
   build:
@@ -18,9 +29,11 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
+      - run: npm install -g autorest
+
       - name: "Generate the .NET Management Client"
         run: |
-          autorest --input-file=./openapi/${{inputs.artifactName}} `
+          autorest --input-file=./openapi/${{inputs.version}}/ocm-mgmt-api-${{inputs.version}}.json `
           --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
           --project-folder=./dotnet/src/Deveel.Ocm.Management.Client `
           --namespace=Deveel.Messaging.Management `
@@ -36,7 +49,7 @@ jobs:
           
       - name: "Generate the .NET Messaging Client"
         run: |
-          autorest --input-file=./openapi/${{inputs.artifactName}} `
+          autorest --input-file=./openapi/${{inputs.version}}/ocm-api-${{inputs.version}}.json `
           --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging `
           --project-folder=./dotnet/src/Deveel.Ocm.Client `
           --namespace=Deveel.Messaging `
@@ -51,7 +64,7 @@ jobs:
           --v3
   
       - name: Restore the .NET Dependencies
-        run: dotnet restore Deveel.Ocm.Sdk.sln
+        run: dotnet restore ./dotnet/Deveel.Ocm.Sdk.sln
       
       - name: Build the .NET SDK
         run: dotnet build ./dotnet/Deveel.Ocm.Sdk.sln -c Release --no-restore
