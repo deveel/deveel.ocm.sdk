@@ -16,6 +16,11 @@ on:
         type: string
         description: "The type of client to generate and deploy"
         required: true
+      commitId:
+        type: string
+        description: "The reference to the commit to build"
+        required: false
+        default: main
 
 jobs:
   build:
@@ -27,7 +32,7 @@ jobs:
     - name: "Generate the .NET Management Client"
       if: ${{inputs.clientType}} == 'management'
       run: |
-        autorest --input-file=.\\openapi\\${{inputs.artifactName}} `
+        autorest --input-file=https://raw.githubcontent.com/deveel/deveel.ocm.sdk/${{inputs.commitId}}/openapi/${{inputs.artifactName}} `
         --output-folder=.\\dotnet\\src\\Deveel.Ocm.Management.Client\\Messaging\\Management `
         --project-folder=.\\dotnet\\src\\Deveel.Ocm.Management.Client `
         --namespace=Deveel.Messaging.Management `
