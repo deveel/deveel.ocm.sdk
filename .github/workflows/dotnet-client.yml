@@ -1,7 +1,7 @@
 name: ".NET Client CI/CD"
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       env:
         type: string
@@ -13,9 +13,8 @@ on:
         description: "The name of the artifact to restore"
         required: true
       clientType:
-        type: choice
+        type: string
         description: "The type of client to generate and deploy"
-        options: [ management, messaging ]
         required: true
 
 jobs:
