@@ -18,11 +18,12 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
-      - run: npm install -g autorest
-
+      - name: "Install Autorest"
+        run: npm install -g autorest
 
       - name: "Generate the .NET Management Client v1"
         run: |
+          cd $GITHUB_WORKSPACE
           autorest --input-file=./openapi/v1/ocm-mgmt-api-v1.json `
           --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
           --project-folder=./dotnet/src/Deveel.Ocm.Management.Client `
@@ -39,6 +40,7 @@ jobs:
           
       - name: "Generate the .NET Messaging Client v1"
         run: |
+          cd $GITHUB_WORKSPACE
           autorest --input-file=./openapi/v1/ocm-api-v1.json `
           --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging `
           --project-folder=./dotnet/src/Deveel.Ocm.Client `
