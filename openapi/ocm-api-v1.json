@@ -625,10 +625,12 @@
         "type": "object",
         "properties": {
           "id": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identifier (within the context of the message)\r\nof the attachment"
           },
           "content": {
+            "minLength": 1,
             "type": "string",
             "description": "The base-64 encoded content of the attachment"
           },
@@ -803,6 +805,7 @@
         "type": "object",
         "properties": {
           "address": {
+            "minLength": 1,
             "type": "string",
             "format": "email"
           },
@@ -824,6 +827,7 @@
             "$ref": "#/components/schemas/SenderTerminal"
           },
           "channel": {
+            "minLength": 1,
             "type": "string",
             "description": "The name of the channel that is used to transport the message"
           },
@@ -853,6 +857,7 @@
         "type": "object",
         "properties": {
           "messageId": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identifier of the message within the system"
           },
@@ -917,6 +922,7 @@
             "nullable": true
           },
           "source": {
+            "minLength": 1,
             "type": "string",
             "description": "The URL to the storage where the media is located\r\nand can be retrieved by the system and forwarded",
             "format": "uri"
@@ -950,6 +956,7 @@
             "$ref": "#/components/schemas/SenderTerminal"
           },
           "channel": {
+            "minLength": 1,
             "type": "string",
             "description": "The name of the channel that is used to transport the message"
           },
@@ -1012,6 +1019,7 @@
         "type": "object",
         "properties": {
           "batchId": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identifier of the batch within the system"
           },
@@ -1039,6 +1047,7 @@
         "type": "object",
         "properties": {
           "name": {
+            "minLength": 1,
             "type": "string",
             "description": "The name of the channel instance"
           },
@@ -1104,6 +1113,7 @@
         "type": "object",
         "properties": {
           "messageId": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identifier of the message within the system"
           },

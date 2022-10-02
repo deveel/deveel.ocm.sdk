@@ -5520,7 +5520,7 @@
             "minItems": 2,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Filter"
+              "$ref": "#/components/schemas/Filter4"
             }
           }
         }
@@ -6211,6 +6211,51 @@
         },
         "description": "The specification of a Basic authentication used to\r\nsecure the connection of a channel"
       },
+      "BinaryFilter1": {
+        "required": [
+          "field",
+          "op"
+        ],
+        "type": "object",
+        "properties": {
+          "op": {
+            "$ref": "#/components/schemas/WebFilterOperator"
+          },
+          "range": {
+            "$ref": "#/components/schemas/Range"
+          },
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
       "Channel": {
         "required": [
           "contentTypes",
@@ -6222,6 +6267,7 @@
         "type": "object",
         "properties": {
           "name": {
+            "minLength": 1,
             "type": "string"
           },
           "type": {
@@ -6245,6 +6291,7 @@
             "nullable": true
           },
           "id": {
+            "minLength": 1,
             "type": "string"
           }
         }
@@ -6256,6 +6303,7 @@
         "type": "object",
         "properties": {
           "channelId": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identifier of the instance of the channel\r\nassigned to the tenant"
           },
@@ -6288,6 +6336,7 @@
             "$ref": "#/components/schemas/ChannelAssignmentResponse"
           },
           "requester": {
+            "minLength": 1,
             "type": "string",
             "description": "The identifier of the user that made the request"
           },
@@ -6297,6 +6346,7 @@
             "format": "date-time"
           },
           "id": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identifier of the request"
           },
@@ -6315,6 +6365,7 @@
         "type": "object",
         "properties": {
           "responder": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identifier of the user responding"
           },
@@ -6402,6 +6453,7 @@
         "type": "object",
         "properties": {
           "metricType": {
+            "minLength": 1,
             "type": "string",
             "description": "The type of metric provisioned (eg. \"messages.outbound\", \"messages.fallbacks\")"
           },
@@ -6527,6 +6579,7 @@
         "type": "object",
         "properties": {
           "id": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identifier of the terminal instance"
           },
@@ -6534,6 +6587,7 @@
             "$ref": "#/components/schemas/TerminalType"
           },
           "address": {
+            "minLength": 1,
             "type": "string",
             "description": "The address of the terminal"
           }
@@ -6557,6 +6611,288 @@
         "x-ms-enum": {
           "name": "ChannelType",
           "modelAsString": true
+        }
+      },
+      "ContainsFilter1": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "EndsWithFilter1": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "EqualFilter1": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "Filter1": {
+        "type": "object",
+        "properties": {
+          "logical": {
+            "$ref": "#/components/schemas/LogicalFilter"
+          },
+          "and": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter1"
+            },
+            "nullable": true
+          },
+          "or": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter1"
+            },
+            "nullable": true
+          },
+          "binary": {
+            "$ref": "#/components/schemas/BinaryFilter1"
+          },
+          "eq": {
+            "$ref": "#/components/schemas/EqualFilter1"
+          },
+          "ne": {
+            "$ref": "#/components/schemas/NotEqualFilter1"
+          },
+          "gt": {
+            "$ref": "#/components/schemas/GreaterThanFilter1"
+          },
+          "gte": {
+            "$ref": "#/components/schemas/GreaterThanOrEqualFilter1"
+          },
+          "lt": {
+            "$ref": "#/components/schemas/LesserThanFilter1"
+          },
+          "lte": {
+            "$ref": "#/components/schemas/LesserThanOrEqualFilter1"
+          },
+          "startsWith": {
+            "$ref": "#/components/schemas/StartsWithFilter1"
+          },
+          "endsWith": {
+            "$ref": "#/components/schemas/EndsWithFilter1"
+          },
+          "contains": {
+            "$ref": "#/components/schemas/ContainsFilter1"
+          },
+          "between": {
+            "$ref": "#/components/schemas/RangeFilter1"
+          },
+          "not": {
+            "$ref": "#/components/schemas/Filter1"
+          }
+        }
+      },
+      "GreaterThanFilter1": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "GreaterThanOrEqualFilter1": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LesserThanFilter1": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LesserThanOrEqualFilter1": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
         }
       },
       "MessageContentType": {
@@ -6583,6 +6919,7 @@
         "type": "object",
         "properties": {
           "name": {
+            "minLength": 1,
             "pattern": "^[a-zA-Z0-9_.-]+$",
             "type": "string",
             "description": "The name of the channel instance"
@@ -6613,6 +6950,7 @@
             "nullable": true
           },
           "channelId": {
+            "minLength": 1,
             "type": "string",
             "description": "The identifier of the source channel from the inventory"
           },
@@ -6676,6 +7014,7 @@
             "nullable": true
           },
           "name": {
+            "minLength": 1,
             "pattern": "^[a-zA-Z0-9_.-]+$",
             "type": "string",
             "description": "The name of the channel instance"
@@ -6722,6 +7061,44 @@
         },
         "description": ""
       },
+      "NotEqualFilter1": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
       "OAuthCredentials": {
         "required": [
           "clientId",
@@ -6730,9 +7107,11 @@
         "type": "object",
         "properties": {
           "clientId": {
+            "minLength": 1,
             "type": "string"
           },
           "clientSecret": {
+            "minLength": 1,
             "type": "string"
           },
           "audience": {
@@ -6748,6 +7127,37 @@
           }
         }
       },
+      "PageRequest1": {
+        "required": [
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortBy": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PageSort1"
+            },
+            "nullable": true
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter1"
+            },
+            "nullable": true
+          }
+        }
+      },
       "PageResultOfChannel": {
         "required": [
           "request",
@@ -6757,7 +7167,7 @@
         "type": "object",
         "properties": {
           "request": {
-            "$ref": "#/components/schemas/PageRequest"
+            "$ref": "#/components/schemas/PageRequest1"
           },
           "totalItems": {
             "type": "integer",
@@ -6811,7 +7221,7 @@
         "type": "object",
         "properties": {
           "request": {
-            "$ref": "#/components/schemas/PageRequest"
+            "$ref": "#/components/schemas/PageRequest1"
           },
           "totalItems": {
             "type": "integer",
@@ -6856,6 +7266,43 @@
           }
         }
       },
+      "PageSort1": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/PageSortDirection"
+          },
+          "ascending": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "RangeFilter1": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "lower": {
+            "$ref": "#/components/schemas/FilterValue"
+          },
+          "upper": {
+            "$ref": "#/components/schemas/FilterValue"
+          }
+        }
+      },
       "RequestedChannel": {
         "required": [
           "contentTypes",
@@ -6866,6 +7313,7 @@
         "type": "object",
         "properties": {
           "sourceId": {
+            "minLength": 1,
             "type": "string",
             "description": "The identifier of the source channel from the inventory"
           },
@@ -6884,6 +7332,7 @@
             "nullable": true
           },
           "name": {
+            "minLength": 1,
             "pattern": "^[a-zA-Z0-9_.-]+$",
             "type": "string",
             "description": "The custom name of the channel"
@@ -6931,6 +7380,23 @@
           "modelAsString": true
         }
       },
+      "StartsWithFilter1": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
       "TerminalType": {
         "enum": [
           "phoneNumber",
@@ -6968,6 +7434,7 @@
             "nullable": true
           },
           "name": {
+            "minLength": 1,
             "type": "string",
             "description": "The name of the channel instance"
           },
@@ -6980,6 +7447,7 @@
             "$ref": "#/components/schemas/ChannelType"
           },
           "provider": {
+            "minLength": 1,
             "type": "string",
             "description": "The provider of messaging services used by\r\nthe channel instance"
           },
@@ -7038,6 +7506,333 @@
         },
         "description": "The instance of a channel owned by a customer"
       },
+      "BinaryFilter2": {
+        "required": [
+          "field",
+          "op"
+        ],
+        "type": "object",
+        "properties": {
+          "op": {
+            "$ref": "#/components/schemas/WebFilterOperator"
+          },
+          "range": {
+            "$ref": "#/components/schemas/Range"
+          },
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "ContainsFilter2": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "EndsWithFilter2": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "EqualFilter2": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "Filter2": {
+        "type": "object",
+        "properties": {
+          "logical": {
+            "$ref": "#/components/schemas/LogicalFilter"
+          },
+          "and": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter2"
+            },
+            "nullable": true
+          },
+          "or": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter2"
+            },
+            "nullable": true
+          },
+          "binary": {
+            "$ref": "#/components/schemas/BinaryFilter2"
+          },
+          "eq": {
+            "$ref": "#/components/schemas/EqualFilter2"
+          },
+          "ne": {
+            "$ref": "#/components/schemas/NotEqualFilter2"
+          },
+          "gt": {
+            "$ref": "#/components/schemas/GreaterThanFilter2"
+          },
+          "gte": {
+            "$ref": "#/components/schemas/GreaterThanOrEqualFilter2"
+          },
+          "lt": {
+            "$ref": "#/components/schemas/LesserThanFilter2"
+          },
+          "lte": {
+            "$ref": "#/components/schemas/LesserThanOrEqualFilter2"
+          },
+          "startsWith": {
+            "$ref": "#/components/schemas/StartsWithFilter2"
+          },
+          "endsWith": {
+            "$ref": "#/components/schemas/EndsWithFilter2"
+          },
+          "contains": {
+            "$ref": "#/components/schemas/ContainsFilter2"
+          },
+          "between": {
+            "$ref": "#/components/schemas/RangeFilter2"
+          },
+          "not": {
+            "$ref": "#/components/schemas/Filter2"
+          }
+        }
+      },
+      "GreaterThanFilter2": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "GreaterThanOrEqualFilter2": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LesserThanFilter2": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LesserThanOrEqualFilter2": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
       "NewServerTerminal": {
         "required": [
           "address",
@@ -7053,6 +7848,7 @@
             "nullable": true
           },
           "provider": {
+            "minLength": 1,
             "type": "string"
           },
           "role": {
@@ -7062,6 +7858,7 @@
             "$ref": "#/components/schemas/ServerTerminalType"
           },
           "address": {
+            "minLength": 1,
             "type": "string"
           }
         }
@@ -7086,6 +7883,75 @@
           }
         }
       },
+      "NotEqualFilter2": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "PageRequest2": {
+        "required": [
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortBy": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PageSort2"
+            },
+            "nullable": true
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter2"
+            },
+            "nullable": true
+          }
+        }
+      },
       "PageResultOfServerTerminal": {
         "required": [
           "request",
@@ -7095,7 +7961,7 @@
         "type": "object",
         "properties": {
           "request": {
-            "$ref": "#/components/schemas/PageRequest"
+            "$ref": "#/components/schemas/PageRequest2"
           },
           "totalItems": {
             "type": "integer",
@@ -7149,7 +8015,7 @@
         "type": "object",
         "properties": {
           "request": {
-            "$ref": "#/components/schemas/PageRequest"
+            "$ref": "#/components/schemas/PageRequest2"
           },
           "totalItems": {
             "type": "integer",
@@ -7194,6 +8060,43 @@
           }
         }
       },
+      "PageSort2": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/PageSortDirection"
+          },
+          "ascending": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "RangeFilter2": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "lower": {
+            "$ref": "#/components/schemas/FilterValue"
+          },
+          "upper": {
+            "$ref": "#/components/schemas/FilterValue"
+          }
+        }
+      },
       "RequestedTerminal": {
         "required": [
           "terminalId"
@@ -7201,6 +8104,7 @@
         "type": "object",
         "properties": {
           "terminalId": {
+            "minLength": 1,
             "type": "string"
           },
           "type": {
@@ -7227,6 +8131,7 @@
             "$ref": "#/components/schemas/ServerTerminalType"
           },
           "address": {
+            "minLength": 1,
             "type": "string"
           },
           "status": {
@@ -7252,6 +8157,7 @@
             "nullable": true
           },
           "provider": {
+            "minLength": 1,
             "type": "string"
           },
           "id": {
@@ -7272,6 +8178,23 @@
           "modelAsString": true
         }
       },
+      "StartsWithFilter2": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
       "TerminalAssignment": {
         "required": [
           "tenantId",
@@ -7284,6 +8207,7 @@
             "nullable": true
           },
           "tenantId": {
+            "minLength": 1,
             "type": "string"
           },
           "timeStamp": {
@@ -7305,6 +8229,7 @@
             "$ref": "#/components/schemas/RequestedTerminal"
           },
           "requester": {
+            "minLength": 1,
             "type": "string"
           },
           "timeStamp": {
@@ -7315,6 +8240,7 @@
             "$ref": "#/components/schemas/TerminalAssignmentResponse"
           },
           "id": {
+            "minLength": 1,
             "type": "string"
           },
           "assignment": {
@@ -7331,6 +8257,7 @@
         "type": "object",
         "properties": {
           "responder": {
+            "minLength": 1,
             "type": "string"
           },
           "responseType": {
@@ -7357,6 +8284,7 @@
             "$ref": "#/components/schemas/ServerTerminalType"
           },
           "address": {
+            "minLength": 1,
             "type": "string"
           }
         }
@@ -7399,6 +8327,51 @@
           "modelAsString": true
         }
       },
+      "BinaryFilter3": {
+        "required": [
+          "field",
+          "op"
+        ],
+        "type": "object",
+        "properties": {
+          "op": {
+            "$ref": "#/components/schemas/WebFilterOperator"
+          },
+          "range": {
+            "$ref": "#/components/schemas/Range"
+          },
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
       "ChannelType1": {
         "enum": [
           "sms",
@@ -7417,6 +8390,23 @@
           "modelAsString": true
         }
       },
+      "ContainsFilter3": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
       "EmailAddress": {
         "required": [
           "address"
@@ -7424,12 +8414,278 @@
         "type": "object",
         "properties": {
           "address": {
+            "minLength": 1,
             "type": "string",
             "format": "email"
           },
           "displayName": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "EndsWithFilter3": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "EqualFilter3": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "Filter3": {
+        "type": "object",
+        "properties": {
+          "logical": {
+            "$ref": "#/components/schemas/LogicalFilter"
+          },
+          "and": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter3"
+            },
+            "nullable": true
+          },
+          "or": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter3"
+            },
+            "nullable": true
+          },
+          "binary": {
+            "$ref": "#/components/schemas/BinaryFilter3"
+          },
+          "eq": {
+            "$ref": "#/components/schemas/EqualFilter3"
+          },
+          "ne": {
+            "$ref": "#/components/schemas/NotEqualFilter3"
+          },
+          "gt": {
+            "$ref": "#/components/schemas/GreaterThanFilter3"
+          },
+          "gte": {
+            "$ref": "#/components/schemas/GreaterThanOrEqualFilter3"
+          },
+          "lt": {
+            "$ref": "#/components/schemas/LesserThanFilter3"
+          },
+          "lte": {
+            "$ref": "#/components/schemas/LesserThanOrEqualFilter3"
+          },
+          "startsWith": {
+            "$ref": "#/components/schemas/StartsWithFilter3"
+          },
+          "endsWith": {
+            "$ref": "#/components/schemas/EndsWithFilter3"
+          },
+          "contains": {
+            "$ref": "#/components/schemas/ContainsFilter3"
+          },
+          "between": {
+            "$ref": "#/components/schemas/RangeFilter3"
+          },
+          "not": {
+            "$ref": "#/components/schemas/Filter3"
+          }
+        }
+      },
+      "GreaterThanFilter3": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "GreaterThanOrEqualFilter3": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LesserThanFilter3": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LesserThanOrEqualFilter3": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
           }
         }
       },
@@ -7459,10 +8715,12 @@
             "$ref": "#/components/schemas/RouteChannel"
           },
           "id": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identifier of the route"
           },
           "name": {
+            "minLength": 1,
             "type": "string",
             "description": "The descriptive name of the route"
           },
@@ -7471,6 +8729,7 @@
             "description": "Indicates the active state of a route"
           },
           "destinationUrl": {
+            "minLength": 1,
             "type": "string",
             "description": "The HTTP URL address where the inbound message\r\nwill be delivered"
           },
@@ -7523,15 +8782,18 @@
         "type": "object",
         "properties": {
           "channel": {
+            "minLength": 1,
             "pattern": "^[a-zA-Z0-9_.-]+$",
             "type": "string",
             "description": "The name of the channel transporting the inbound messages"
           },
           "name": {
+            "minLength": 1,
             "type": "string",
             "description": "A descriptive name of the route (for display)"
           },
           "destinationUrl": {
+            "minLength": 1,
             "type": "string",
             "description": "The HTTP URL address where the inbound message\r\nwill be delivered"
           },
@@ -7566,6 +8828,75 @@
         },
         "description": "The request to create a new route to receive inbound messages"
       },
+      "NotEqualFilter3": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "PageRequest3": {
+        "required": [
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortBy": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PageSort3"
+            },
+            "nullable": true
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter3"
+            },
+            "nullable": true
+          }
+        }
+      },
       "PageResultOfMessageRoute": {
         "required": [
           "request",
@@ -7575,7 +8906,7 @@
         "type": "object",
         "properties": {
           "request": {
-            "$ref": "#/components/schemas/PageRequest"
+            "$ref": "#/components/schemas/PageRequest3"
           },
           "totalItems": {
             "type": "integer",
@@ -7620,6 +8951,43 @@
           }
         }
       },
+      "PageSort3": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/PageSortDirection"
+          },
+          "ascending": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "RangeFilter3": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "lower": {
+            "$ref": "#/components/schemas/FilterValue"
+          },
+          "upper": {
+            "$ref": "#/components/schemas/FilterValue"
+          }
+        }
+      },
       "RouteChannel": {
         "required": [
           "id",
@@ -7629,6 +8997,7 @@
         "type": "object",
         "properties": {
           "name": {
+            "minLength": 1,
             "pattern": "^[a-zA-Z0-9_.-]+$",
             "type": "string",
             "description": "The name of the channel instance"
@@ -7637,6 +9006,7 @@
             "$ref": "#/components/schemas/ChannelType1"
           },
           "id": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identifier of the channel"
           }
@@ -7654,6 +9024,23 @@
           }
         },
         "description": "A rule used to match the configuration for the routing of a message"
+      },
+      "StartsWithFilter3": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
       },
       "Terminal": {
         "type": "object",
@@ -7700,6 +9087,7 @@
             "$ref": "#/components/schemas/TextMatchOperator"
           },
           "value": {
+            "minLength": 1,
             "type": "string"
           }
         }
@@ -7717,6 +9105,333 @@
           "modelAsString": true
         }
       },
+      "BinaryFilter4": {
+        "required": [
+          "field",
+          "op"
+        ],
+        "type": "object",
+        "properties": {
+          "op": {
+            "$ref": "#/components/schemas/WebFilterOperator"
+          },
+          "range": {
+            "$ref": "#/components/schemas/Range"
+          },
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "ContainsFilter4": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "EndsWithFilter4": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "EqualFilter4": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "Filter4": {
+        "type": "object",
+        "properties": {
+          "logical": {
+            "$ref": "#/components/schemas/LogicalFilter"
+          },
+          "and": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter4"
+            },
+            "nullable": true
+          },
+          "or": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter4"
+            },
+            "nullable": true
+          },
+          "binary": {
+            "$ref": "#/components/schemas/BinaryFilter4"
+          },
+          "eq": {
+            "$ref": "#/components/schemas/EqualFilter4"
+          },
+          "ne": {
+            "$ref": "#/components/schemas/NotEqualFilter4"
+          },
+          "gt": {
+            "$ref": "#/components/schemas/GreaterThanFilter4"
+          },
+          "gte": {
+            "$ref": "#/components/schemas/GreaterThanOrEqualFilter4"
+          },
+          "lt": {
+            "$ref": "#/components/schemas/LesserThanFilter4"
+          },
+          "lte": {
+            "$ref": "#/components/schemas/LesserThanOrEqualFilter4"
+          },
+          "startsWith": {
+            "$ref": "#/components/schemas/StartsWithFilter4"
+          },
+          "endsWith": {
+            "$ref": "#/components/schemas/EndsWithFilter4"
+          },
+          "contains": {
+            "$ref": "#/components/schemas/ContainsFilter4"
+          },
+          "between": {
+            "$ref": "#/components/schemas/RangeFilter4"
+          },
+          "not": {
+            "$ref": "#/components/schemas/Filter4"
+          }
+        }
+      },
+      "GreaterThanFilter4": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "GreaterThanOrEqualFilter4": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LesserThanFilter4": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LesserThanOrEqualFilter4": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
       "NewWebhookSubscription": {
         "required": [
           "destinationUrl",
@@ -7730,6 +9445,7 @@
             "nullable": true
           },
           "destinationUrl": {
+            "minLength": 1,
             "type": "string",
             "description": "The URL where the webhooks should be delivered",
             "format": "uri"
@@ -7758,7 +9474,7 @@
           "filters": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Filter"
+              "$ref": "#/components/schemas/Filter4"
             },
             "description": "An optional set of filters that restrict the events to be notified",
             "nullable": true
@@ -7777,6 +9493,75 @@
         },
         "description": "Requests the subscription to the notification of event\r\noccurrences within the system"
       },
+      "NotEqualFilter4": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "PageRequest4": {
+        "required": [
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortBy": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PageSort4"
+            },
+            "nullable": true
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter4"
+            },
+            "nullable": true
+          }
+        }
+      },
       "PageResultOfWebhookSubscription": {
         "required": [
           "request",
@@ -7786,7 +9571,7 @@
         "type": "object",
         "properties": {
           "request": {
-            "$ref": "#/components/schemas/PageRequest"
+            "$ref": "#/components/schemas/PageRequest4"
           },
           "totalItems": {
             "type": "integer",
@@ -7831,6 +9616,60 @@
           }
         }
       },
+      "PageSort4": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/PageSortDirection"
+          },
+          "ascending": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "RangeFilter4": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "lower": {
+            "$ref": "#/components/schemas/FilterValue"
+          },
+          "upper": {
+            "$ref": "#/components/schemas/FilterValue"
+          }
+        }
+      },
+      "StartsWithFilter4": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
       "WebhookSubscription": {
         "required": [
           "active",
@@ -7842,6 +9681,7 @@
         "type": "object",
         "properties": {
           "destinationUrl": {
+            "minLength": 1,
             "type": "string",
             "description": "The HTTP URL address where the notifications\r\nare delivered (as webhooks)",
             "format": "uri"
@@ -7860,6 +9700,7 @@
             "nullable": true
           },
           "id": {
+            "minLength": 1,
             "type": "string",
             "description": "The unique identider of the subscription"
           },
@@ -7872,6 +9713,7 @@
             "description": "The list of message event types subscribed"
           },
           "name": {
+            "minLength": 1,
             "type": "string",
             "description": "A descriptive name of the subscription (for display)"
           },
@@ -7887,7 +9729,7 @@
           "filters": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Filter"
+              "$ref": "#/components/schemas/Filter4"
             },
             "description": "An optional set of filters used to restrict the\r\ndelivery of webhooks",
             "nullable": true
