@@ -40,10 +40,10 @@ jobs:
     uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-client.yml@main
     with:
       artifactName: ocm-mgmt-api-v1.json
-      type: management
+      clientType: management
 
   dotnet-msg-client:
     uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-client.yml@main
     with:
       artifactName: ocm-api-v1.json
-      type: messaging
+      clientType: messaging
