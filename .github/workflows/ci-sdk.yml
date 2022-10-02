@@ -6,17 +6,6 @@ on:
     branches: [ "main" ]
 
   workflow_dispatch:
-    inputs:
-      env:
-        type: string
-        description: "The environment of the client"
-        required: false
-        default: dev
-      version:
-        type: string
-        description: "The version of the client"
-        required: false
-        default: "v1"
 
 jobs:
   build:
@@ -31,9 +20,10 @@ jobs:
 
       - run: npm install -g autorest
 
-      - name: "Generate the .NET Management Client"
+
+      - name: "Generate the .NET Management Client v1"
         run: |
-          autorest --input-file=./openapi/${{inputs.version}}/ocm-mgmt-api-${{inputs.version}}.json `
+          autorest --input-file=./openapi/ocm-mgmt-api-v1.json `
           --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
           --project-folder=./dotnet/src/Deveel.Ocm.Management.Client `
           --namespace=Deveel.Messaging.Management `
@@ -47,9 +37,9 @@ jobs:
           --version=3.0.6349 `
           --v3
           
-      - name: "Generate the .NET Messaging Client"
+      - name: "Generate the .NET Messaging Client v1"
         run: |
-          autorest --input-file=./openapi/${{inputs.version}}/ocm-api-${{inputs.version}}.json `
+          autorest --input-file=./openapi/ocm-api-v1.json `
           --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging `
           --project-folder=./dotnet/src/Deveel.Ocm.Client `
           --namespace=Deveel.Messaging `
