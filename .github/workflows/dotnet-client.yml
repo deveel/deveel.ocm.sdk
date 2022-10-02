@@ -49,7 +49,7 @@ jobs:
     - name: "Generate the .NET Messaging Client"
       if: ${{inputs.clientType == 'messaging'}}
       run: |
-        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.sdk/${{inputs.commitId}}/${{inputs.artifactName}} `
+        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.sdk/${{inputs.commitId}}/openapi/${{inputs.artifactName}} `
         --output-folder=.\\dotnet\\src\\Deveel.Ocm.Client\\Messaging `
         --project-folder=.\\dotnet\\src\\Deveel.Ocm.Client `
         --namespace=Deveel.Messaging `
