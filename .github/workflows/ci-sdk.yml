@@ -21,6 +21,9 @@ jobs:
       - name: "Install Autorest"
         run: npm install -g autorest
 
+      - name: "Listing the content of current dir (Debug)"
+        run: ls .
+
       - name: "Generate the .NET Management Client v1"
         run: |
           autorest --input-file=./openapi/ocm-mgmt-api-v1.json `
