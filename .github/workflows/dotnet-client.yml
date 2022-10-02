@@ -27,9 +27,9 @@ jobs:
     - name: "Generate the .NET Management Client"
       if: ${{inputs.clientType}} == 'management'
       run: |
-        autorest --input-file=./openapi/${{inputs.artifactName}} `
-        --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
-        --project-folder=./dotnet/src/Deveel.Ocm.Management.Client `
+        autorest --input-file=.\\openapi\\${{inputs.artifactName}} `
+        --output-folder=.\\dotnet\\src\\Deveel.Ocm.Management.Client\\Messaging\\Management `
+        --project-folder=.\\dotnet\\src\\Deveel.Ocm.Management.Client `
         --namespace=Deveel.Messaging.Management `
         --csharp `
         --add-credentials `
@@ -39,13 +39,15 @@ jobs:
         --head-as-boolean `
         --public-clients `
         --version=3.0.6349 `
-        --v3
+        --v3 `
+        --verbose
+
     - name: "Generate the .NET Messaging Client"
       if: ${{inputs.clientType}} == 'messaging'
       run: |
-        autorest --input-file=./openapi/${{inputs.artifactName}} `
-        --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging `
-        --project-folder=./dotnet/src/Deveel.Ocm.Client `
+        autorest --input-file=.\\openapi\\${{inputs.artifactName}} `
+        --output-folder=.\\dotnet\\src\\Deveel.Ocm.Client/Messaging `
+        --project-folder=.\\dotnet\\src\\Deveel.Ocm.Client `
         --namespace=Deveel.Messaging `
         --csharp `
         --add-credentials `
@@ -55,4 +57,5 @@ jobs:
         --head-as-boolean `
         --public-clients `
         --version=3.0.6349 `
-        --v3
+        --v3 `
+        --verbose
