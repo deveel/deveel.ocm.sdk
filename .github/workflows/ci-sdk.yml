@@ -23,10 +23,9 @@ jobs:
 
       - name: "Generate the .NET Management Client v1"
         run: |
-          cd $GITHUB_WORKSPACE
-          autorest --input-file=./openapi/ocm-mgmt-api-v1.json `
-          --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
-          --project-folder=./dotnet/src/Deveel.Ocm.Management.Client `
+          autorest --input-file=$GITHUB_WORKSPACE/openapi/ocm-mgmt-api-v1.json `
+          --output-folder=$GITHUB_WORKSPACE/dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
+          --project-folder=$GITHUB_WORKSPACE/dotnet/src/Deveel.Ocm.Management.Client `
           --namespace=Deveel.Messaging.Management `
           --csharp `
           --add-credentials `
