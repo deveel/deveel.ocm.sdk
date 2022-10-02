@@ -39,10 +39,12 @@ jobs:
           --public-clients `
           --version=3.0.6349 `
           --v3
-          
+
+      - name: List the current dir (Debug)          
+        run: ls .
+
       - name: "Generate the .NET Messaging Client"
         run: |
-          ls .
           autorest --input-file=./openapi/ocm-api-v1.json `
           --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging `
           --project-folder=./dotnet/src/Deveel.Ocm.Client `
