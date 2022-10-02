@@ -9,7 +9,10 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    needs: 
+      - dotnet-mgmt-client
+      - dotnet-msg-client
+    runs-on: ubuntu-latest
 
     steps:
     
@@ -18,42 +21,6 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
-      - name: "Install Autorest"
-        run: npm install -g autorest
-
-      - name: "Generate the .NET Management Client v1"
-        run: |
-          autorest --input-file=./openapi/ocm-mgmt-api-v1.json `
-          --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
-          --project-folder=./dotnet/src/Deveel.Ocm.Management.Client `
-          --namespace=Deveel.Messaging.Management `
-          --csharp `
-          --add-credentials `
-          --sync-methods=all `
-          --override-client-name=ManagementClient `
-          --use-datetimeoffset `
-          --head-as-boolean `
-          --public-clients `
-          --version=3.0.6349 `
-          --v3
-          
-      - name: "Generate the .NET Messaging Client v1"
-        run: |
-          cd $GITHUB_WORKSPACE
-          autorest --input-file=./openapi/ocm-api-v1.json `
-          --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging `
-          --project-folder=./dotnet/src/Deveel.Ocm.Client `
-          --namespace=Deveel.Messaging `
-          --csharp `
-          --add-credentials `
-          --sync-methods=all `
-          --override-client-name=MessagingClient `
-          --use-datetimeoffset `
-          --head-as-boolean `
-          --public-clients `
-          --version=3.0.6349 `
-          --v3
-  
       - name: Restore the .NET Dependencies
         run: dotnet restore ./dotnet/Deveel.Ocm.Sdk.sln
       
@@ -68,3 +35,15 @@ jobs:
 
       - name: Push Packages to GitHub NuGet
         run: dotnet nuget push ./nuget/**/*.nupkg --skip-duplicate --api-key ${{secrets.DEVEEL_NUGET_TOKEN}} --source "Deveel GitHub"
+
+  dotnet-mgmt-client:
+    uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-client.yml@main
+    with:
+      artifactName: ocm-mgmt-api-v1.json
+      type: management
+
+  dotnet-msg-client:
+    uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-client.yml@main
+    with:
+      artifactName: ocm-api-v1.json
+      type: messaging
