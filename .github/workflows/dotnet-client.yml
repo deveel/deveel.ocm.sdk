@@ -1,4 +1,4 @@
-name: ".NET Client CI/CD"
+name: ".NET Client Generation"
 
 on:
   workflow_call:
@@ -19,43 +19,40 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Setup .NET 6.0
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
+    - run: npm install -g autorest
 
     - name: "Generate the .NET Management Client"
       if: ${{inputs.clientType}} == 'management'
       run: |
-        autorest --input-file=./openapi/${{inputs.artifactName}} `
-        --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
-        --project-folder=./dotnet/src/Deveel.Ocm.Management.Client `
-        --namespace=Deveel.Messaging.Management `
-        --csharp `
-        --add-credentials `
-        --sync-methods=all `
-        --override-client-name=ManagementClient `
-        --use-datetimeoffset `
-        --head-as-boolean `
-        --public-clients `
-        --version=3.0.6349 `
+        autorest --input-file=./openapi/${{inputs.artifactName}} 
+        --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management 
+        --project-folder=./dotnet/src/Deveel.Ocm.Management.Client 
+        --namespace=Deveel.Messaging.Management 
+        --csharp 
+        --add-credentials 
+        --sync-methods=all 
+        --override-client-name=ManagementClient 
+        --use-datetimeoffset 
+        --head-as-boolean 
+        --public-clients 
+        --version=3.0.6349 
         --v3
     - name: "Generate the .NET Messaging Client"
       if: ${{inputs.clientType}} == 'messaging'
       run: |
-        autorest --input-file=./openapi/${{inputs.artifactName}} `
-        --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging `
-        --project-folder=./dotnet/src/Deveel.Ocm.Client `
-        --namespace=Deveel.Messaging `
-        --csharp `
-        --add-credentials `
-        --sync-methods=all `
-        --override-client-name=MessagingClient `
-        --use-datetimeoffset `
-        --head-as-boolean `
-        --public-clients `
-        --version=3.0.6349 `
+        autorest --input-file=./openapi/${{inputs.artifactName}} 
+        --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging 
+        --project-folder=./dotnet/src/Deveel.Ocm.Client 
+        --namespace=Deveel.Messaging 
+        --csharp 
+        --add-credentials 
+        --sync-methods=all 
+        --override-client-name=MessagingClient 
+        --use-datetimeoffset 
+        --head-as-boolean 
+        --public-clients 
+        --version=3.0.6349 
         --v3
