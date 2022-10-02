@@ -22,7 +22,7 @@ jobs:
         run: npm install -g autorest
 
       - name: "Listing the content of current dir (Debug)"
-        run: ls .
+        run: tree .
 
       - name: "Generate the .NET Management Client v1"
         run: |
