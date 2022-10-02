@@ -24,7 +24,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - run: npm install -g autorest
@@ -32,33 +32,33 @@ jobs:
     - name: "Generate the .NET Management Client"
       if: ${{inputs.clientType == 'management'}}
       run: |
-        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.sdk/${{inputs.commitId}}/openapi/${{inputs.artifactName}}
-        --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management
-        --project-folder=.\\dotnet\\src\\Deveel.Ocm.Management.Client
-        --namespace=Deveel.Messaging.Management
-        --csharp
-        --add-credentials
-        --sync-methods=all
-        --override-client-name=ManagementClient
-        --use-datetimeoffset
-        --head-as-boolean
-        --public-clients
-        --version=3.0.6349
+        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.sdk/${{inputs.commitId}}/openapi/${{inputs.artifactName}} `
+        --output-folder=.\\dotnet\\src\\Deveel.Ocm.Management.Client\\Messaging\\Management `
+        --project-folder=.\\dotnet\\src\\Deveel.Ocm.Management.Client `
+        --namespace=Deveel.Messaging.Management `
+        --csharp `
+        --add-credentials `
+        --sync-methods=all `
+        --override-client-name=ManagementClient `
+        --use-datetimeoffset `
+        --head-as-boolean `
+        --public-clients `
+        --version=3.0.6349 `
         --v3
 
     - name: "Generate the .NET Messaging Client"
       if: ${{inputs.clientType == 'messaging'}}
       run: |
-        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.sdk/${{inputs.commitId}}/${{inputs.artifactName}}
-        --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging
-        --project-folder=./dotnet/src/Deveel.Ocm.Client
-        --namespace=Deveel.Messaging
-        --csharp
-        --add-credentials
-        --sync-methods=all
-        --override-client-name=MessagingClient
-        --use-datetimeoffset
-        --head-as-boolean
-        --public-clients
-        --version=3.0.6349
+        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.sdk/${{inputs.commitId}}/${{inputs.artifactName}} `
+        --output-folder=.\\dotnet\\src\\Deveel.Ocm.Client\\Messaging `
+        --project-folder=.\\dotnet\\src\\Deveel.Ocm.Client `
+        --namespace=Deveel.Messaging `
+        --csharp `
+        --add-credentials `
+        --sync-methods=all `
+        --override-client-name=MessagingClient `
+        --use-datetimeoffset `
+        --head-as-boolean `
+        --public-clients `
+        --version=3.0.6349 `
         --v3
