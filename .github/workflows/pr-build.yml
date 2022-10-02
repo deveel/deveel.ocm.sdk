@@ -25,6 +25,7 @@ jobs:
 
       - name: "Generate the .NET Management Client v1"
         run: |
+          ls .
           autorest --input-file=./openapi/ocm-mgmt-api-v1.json `
           --output-folder=./dotnet/src/Deveel.Ocm.Management.Client/Messaging/Management `
           --project-folder=./dotnet/src/Deveel.Ocm.Management.Client `
@@ -41,6 +42,7 @@ jobs:
           
       - name: "Generate the .NET Messaging Client"
         run: |
+          ls .
           autorest --input-file=./openapi/ocm-api-v1.json `
           --output-folder=./dotnet/src/Deveel.Ocm.Client/Messaging `
           --project-folder=./dotnet/src/Deveel.Ocm.Client `
