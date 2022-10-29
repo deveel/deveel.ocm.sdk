@@ -26,11 +26,8 @@ jobs:
           name: channels-client
           path: ./dotnet/src/Deveel.Ocm.Channels.Management/Management
 
-      - name: Restore the .NET Dependencies
-        run: dotnet restore ./dotnet/Deveel.Ocm.Sdk.sln
-
       - name: Build the .NET SDK
-        run: dotnet build ./dotnet/Deveel.Ocm.Sdk.sln -c Release --no-restore
+        run: dotnet build ./dotnet/Deveel.Ocm.Sdk.sln -c Release --version-suffix $GITHUB_RUN_ID
 
       - name: Test
         run: dotnet test ./test/**/*.csproj --no-build --verbosity normal -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.XUnit]*" /p:Exclude="[*.Client]*"
