@@ -4,9 +4,11 @@ on:
   push:
     branches: [main]
 
+  workflow_call:
+
 jobs:
-  run_if:
-    if: startsWith(github.event.head_commit.message, '#channel v1 dev')
+  build:
+    # if: startsWith(github.event.head_commit.message, '#channel v1 dev')
     runs-on: ubuntu-latest
 
     steps:
