@@ -27,7 +27,7 @@ jobs:
           path: ./dotnet/src/Deveel.Ocm.Channels.Management/Management
 
       - name: Restore the .NET Dependencies
-        run: dotnet restore ./dotnet
+        run: dotnet restore ./dotnet/Deveel.Ocm.Sdk.sln
 
       - name: Build the .NET SDK
         run: dotnet build ./dotnet/Deveel.Ocm.Sdk.sln -c Release --no-restore
