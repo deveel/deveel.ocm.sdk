@@ -40,11 +40,11 @@ jobs:
                    --generation1-convenience-client \
                    --v3
 
-      - name: Add Deveel GitHub NuGet Source
-        run: dotnet nuget add source "https://nuget.pkg.github.com/deveel/index.json" -n "Deveel GitHub" -u ${{secrets.DEVEEL_NUGET_USER}} -p ${{ secrets.DEVEEL_NUGET_TOKEN }} --store-password-in-clear-text
+      # - name: Add Deveel GitHub NuGet Source
+      #   run: dotnet nuget add source "https://nuget.pkg.github.com/deveel/index.json" -n "Deveel GitHub" -u ${{secrets.DEVEEL_NUGET_USER}} -p ${{ secrets.DEVEEL_NUGET_TOKEN }} --store-password-in-clear-text
 
-      - name: Build .NET Channel Clients
-        run: dotnet build ./dotnet/src/Deveel.Ocm.Channels.Management/Deveels.Ocm.Channel.Management.csproj -c Release
+      # - name: Build .NET Channel Clients
+      #   run: dotnet build ./dotnet/src/Deveel.Ocm.Channels.Management/Deveels.Ocm.Channel.Management.csproj -c Release
 
       # - name: Pack Clients
       #   run: dotnet pack "./dotnet/src/Deveel.Ocm.Channel.Management/Deveel.Ocm.Channel.Management.csproj" -c Release --no-restore --no-build --include-symbols --version-suffix $GITHUB_RUN_ID --output ./nuget
