@@ -35,5 +35,5 @@ jobs:
       - name: Push Packages to GitHub NuGet
         run: dotnet nuget push ./nuget/**/*.nupkg --skip-duplicate --api-key ${{secrets.DEVEEL_NUGET_TOKEN}} --source "Deveel GitHub"
 
-  dotnet-channel-client:
+  dotnet-channel:
     uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-channel.yml@main
