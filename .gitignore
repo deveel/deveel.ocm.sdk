@@ -349,3 +349,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /dotnet/make-clients.ps1
+/dotnet/src/Deveel.Ocm.Channels.Management/Management
