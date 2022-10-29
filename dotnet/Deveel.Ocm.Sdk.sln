@@ -3,29 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.Management.Client", "src\Deveel.Ocm.Management.Client\Deveel.Ocm.Management.Client.csproj", "{D762BDF3-F99B-496A-B6EC-EBBF8A214B1A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.Client", "src\Deveel.Ocm.Client\Deveel.Ocm.Client.csproj", "{14B2DD8B-03F9-4401-8F81-949C196CABAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.M.Channels.Management", "Deveel.Ocm.Channels.Management\Deveel.Ocm.Channels.Management.csproj", "{7E31B35A-9409-4992-A23F-45D9B095DF45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D762BDF3-F99B-496A-B6EC-EBBF8A214B1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D762BDF3-F99B-496A-B6EC-EBBF8A214B1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D762BDF3-F99B-496A-B6EC-EBBF8A214B1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D762BDF3-F99B-496A-B6EC-EBBF8A214B1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14B2DD8B-03F9-4401-8F81-949C196CABAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14B2DD8B-03F9-4401-8F81-949C196CABAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14B2DD8B-03F9-4401-8F81-949C196CABAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14B2DD8B-03F9-4401-8F81-949C196CABAB}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {124CFFED-575F-4579-A50A-31B18E90BE43}
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E31B35A-9409-4992-A23F-45D9B095DF45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E31B35A-9409-4992-A23F-45D9B095DF45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E31B35A-9409-4992-A23F-45D9B095DF45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E31B35A-9409-4992-A23F-45D9B095DF45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

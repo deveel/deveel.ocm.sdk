@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Deveel.Messaging.Channels</RootNamespace>
+    <Authors>antonello</Authors>
+    <Company>Deveel AS</Company>
+    <Description>The client library implementing an interface to the management of the Channels of the Deveel OCM platform</Description>
+    <Copyright>(C) 2022 Deveel AS</Copyright>
+    <PackageProjectUrl>https://ocm.deveel.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/deveel/deveel.ocm.sdk</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>channel client rest ocm management</PackageTags>
+    <PackageIcon>deveel-logo.png</PackageIcon>
+    <VersionPrefix>1.1.0</VersionPrefix>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<LangVersion>9.0</LangVersion>
+		<IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+		<RestoreAdditionalProjectSources>https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json</RestoreAdditionalProjectSources>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20221025.3" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Core" Version="1.25.0" />
+	</ItemGroup>
+
+    <ItemGroup>
+    <None Include="..\..\..\deveel-logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+</Project>

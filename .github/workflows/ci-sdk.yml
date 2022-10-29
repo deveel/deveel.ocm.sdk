@@ -3,20 +3,18 @@ name: SDK CI Build
 # Controls when the workflow will run
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
   workflow_dispatch:
 
 jobs:
   build:
-    needs: 
-      - dotnet-mgmt-client
-      - dotnet-msg-client
+    needs:
+      - dotnet-channel
 
     runs-on: ubuntu-latest
 
     steps:
-    
       - name: Setup .NET ${{matrix.dotnet}}
         uses: actions/setup-dotnet@v2.1.1
         with:
@@ -24,27 +22,18 @@ jobs:
 
       - name: Restore the .NET Dependencies
         run: dotnet restore ./dotnet/Deveel.Ocm.Sdk.sln
-      
+
       - name: Build the .NET SDK
         run: dotnet build ./dotnet/Deveel.Ocm.Sdk.sln -c Release --no-restore
-        
+
       - name: Test
         run: dotnet test ./test/**/*.csproj --no-build --verbosity normal -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.XUnit]*" /p:Exclude="[*.Client]*"
-        
+
       - name: Pack Common Libraries
         run: dotnet pack Deveel.Ocm.Sdk.sln -c Release --no-restore --no-build --include-symbols --version-suffix $GITHUB_RUN_ID --output ./nuget
 
       - name: Push Packages to GitHub NuGet
         run: dotnet nuget push ./nuget/**/*.nupkg --skip-duplicate --api-key ${{secrets.DEVEEL_NUGET_TOKEN}} --source "Deveel GitHub"
 
-  dotnet-mgmt-client:
-    uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-client.yml@main
-    with:
-      artifactName: ocm-mgmt-api-v1.json
-      clientType: management
-
-  dotnet-msg-client:
-    uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-client.yml@main
-    with:
-      artifactName: ocm-api-v1.json
-      clientType: messaging
+  dotnet-channel-client:
+    uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-channel.yml@main
