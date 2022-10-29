@@ -1,0 +1,3653 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Channels Management API v1",
+    "contact": {
+      "name": "Antonello Provenzano",
+      "email": "antonello@deveel.com"
+    },
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://api.ocm.deveel.net"
+    }
+  ],
+  "paths": {
+    "/request/{id}": {
+      "get": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Gets a Channel Assignment Request",
+        "operationId": "getChannelRequest",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request was found and returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelAssignmentRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelAssignmentRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No channel assignment request with the given identifier was found"
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "request:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/request": {
+      "get": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Gets all Channel Assignment Requests",
+        "operationId": "getChannelRequests",
+        "responses": {
+          "200": {
+            "description": "The list of requests is returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChannelAssignmentRequest"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChannelAssignmentRequest"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "One or more of the parameters is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "request:channel"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Requests the Assignment of a Channel",
+        "operationId": "requestChannel",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewChannelAssignmentRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewChannelAssignmentRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewChannelAssignmentRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewChannelAssignmentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "The request was successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelAssignmentRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelAssignmentRequest"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The content of the request is wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "404": {
+            "description": "The channel requested was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "409": {
+            "description": "A channel with the same name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "415": {
+            "description": "The content type of the channel is not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "request:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/schema": {
+      "get": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Gets all the Channel Schemata",
+        "operationId": "getAllChannelSchema",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All the supported channel schemata are returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChannelSchema"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChannelSchema"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "read:inventory"
+            ]
+          }
+        ]
+      }
+    },
+    "/schema/{type}/{provider}": {
+      "get": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Get a Channel Schema",
+        "operationId": "getChannelSchema",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ChannelType"
+            }
+          },
+          {
+            "name": "provider",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The schema for the channel of the given type and provider was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelSchema"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelSchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The type or the provider of channel is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "404": {
+            "description": "The schema for the given channel type and provider was not found"
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "read:inventory"
+            ]
+          }
+        ]
+      }
+    },
+    "/": {
+      "post": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Creates a new Channel",
+        "operationId": "createChannel",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserChannel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserChannel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserChannel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserChannel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The channel was successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some of the contents of the channel were invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "409": {
+            "description": "A channel with the same name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "405": {
+            "description": "The provider does not allow some of the functions of the channel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "406": {
+            "description": "One or more of the terminals are not allowed by the channel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "415": {
+            "description": "One of the content types of the channel is not supported by the provider",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "create:channel"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Gets all Channels",
+        "operationId": "listAllChannels",
+        "parameters": [
+          {
+            "name": "includeNotActive",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of channels of the current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserChannel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserChannel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "read:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/{channelId}": {
+      "get": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Gets a Channel",
+        "operationId": "getChannel",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The channel with the given ID is returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No channel with the given ID was found"
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "read:channel"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Deletes a Channel",
+        "operationId": "deleteChannel",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The channel was deleted"
+          },
+          "404": {
+            "description": "No channel with the given ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "400": {
+            "description": "Something happened and the channel was not deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "delete:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/name/{channelName}": {
+      "get": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Gets a Channel by Name",
+        "operationId": "getChannelByName",
+        "parameters": [
+          {
+            "name": "channelName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-zA-Z0-9_.-]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The channel with the given name is returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No channel with the given name was found"
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "read:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/page": {
+      "get": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Gets a page of Channels",
+        "operationId": "getChannelPage",
+        "parameters": [
+          {
+            "name": "p",
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sz",
+            "in": "query",
+            "schema": {
+              "maximum": 50,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "provider",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ChannelType"
+            }
+          },
+          {
+            "name": "s",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The page of channels of the current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResultOfUserChannel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResultOfUserChannel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "One or more of the parameters is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "read:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/{channelId}/credentials": {
+      "put": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Updates the Channel Credentials",
+        "operationId": "updateChannelCredentials",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ChannelCredentials"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ChannelCredentials"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ChannelCredentials"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ChannelCredentials"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "The credentials were updated successfully"
+          },
+          "304": {
+            "description": "The channel was not modified"
+          },
+          "404": {
+            "description": "The channel was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "400": {
+            "description": "The request contained some invalid elements",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "update:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/{channelName}": {
+      "head": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Checks if a Channel Exists",
+        "operationId": "channelExists",
+        "parameters": [
+          {
+            "name": "channelName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-zA-Z0-9_.-]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "A channel with the given name exists"
+          },
+          "404": {
+            "description": "None channel with the given name was found"
+          },
+          "400": {
+            "description": "The name of the channel is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "read:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/{channelId}/terminal": {
+      "put": {
+        "tags": [
+          "channel",
+          "terminal"
+        ],
+        "summary": "Adds a Terminal",
+        "operationId": "addChannelTerminal",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewChannelTerminal"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewChannelTerminal"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewChannelTerminal"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewChannelTerminal"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The channel was updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "The channel was not modified"
+          },
+          "404": {
+            "description": "The channel was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "409": {
+            "description": "The channel has already the terminal",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "400": {
+            "description": "The type of terminal is not allowed by the channel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "update:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/{channelId}/terminal/{terminalId}": {
+      "delete": {
+        "tags": [
+          "channel",
+          "terminal"
+        ],
+        "summary": "Removes a Terminal",
+        "operationId": "removeChannelTerminal",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "terminalId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The channel was updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "The channel was not modified"
+          },
+          "404": {
+            "description": "The channel was not found or the channel has not the terminal",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "update:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/{channelId}/settings": {
+      "patch": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Updates the Settings of a Channel",
+        "operationId": "updateChannelSettings",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "minLength": 1,
+                "type": "object",
+                "additionalProperties": { }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "minLength": 1,
+                "type": "object",
+                "additionalProperties": { }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "minLength": 1,
+                "type": "object",
+                "additionalProperties": { }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "minLength": 1,
+                "type": "object",
+                "additionalProperties": { }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The channel was updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "The channel was not updated"
+          },
+          "404": {
+            "description": "No channel with the given ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "update:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/{channelId}/state": {
+      "put": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Changes the State of a Channel",
+        "operationId": "changeChannelState",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChannelStateChange"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChannelStateChange"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChannelStateChange"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChannelStateChange"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The channel was updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserChannel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No channel with the given ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "400": {
+            "description": "The new state is invalid for the channel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "update:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/inventory/{channelId}": {
+      "get": {
+        "tags": [
+          "channel",
+          "inventory"
+        ],
+        "summary": "Gets a Channel from the Inventory",
+        "operationId": "getChannelFromInventory",
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The channel was found in the inventory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Channel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Channel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The channel was not found in the inventory"
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "read:inventory",
+              "read:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/inventory": {
+      "get": {
+        "tags": [
+          "channel",
+          "inventory"
+        ],
+        "summary": "Gets a Page of Channels from the Inventory",
+        "operationId": "getChannelInventoryPage",
+        "parameters": [
+          {
+            "name": "number",
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "maximum": 50,
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The page of channels is returned from the inventory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResultOfChannel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResultOfChannel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The paging parameters are not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "read:inventory",
+              "read:channel"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiKeyCredentials": {
+        "required": [
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "value": {
+            "minLength": 3,
+            "type": "string",
+            "description": "The value of the key"
+          }
+        },
+        "description": "The specification of an API Key used to secure a channel"
+      },
+      "BasicAuthCredentials": {
+        "required": [
+          "password",
+          "userName"
+        ],
+        "type": "object",
+        "properties": {
+          "userName": {
+            "minLength": 3,
+            "type": "string",
+            "description": "The name of the user of the credentials"
+          },
+          "password": {
+            "minLength": 3,
+            "type": "string",
+            "description": "The secret password of the credentials"
+          }
+        },
+        "description": "The specification of a Basic authentication used to\r\nsecure the connection of a channel"
+      },
+      "BinaryFilter": {
+        "required": [
+          "field",
+          "op"
+        ],
+        "type": "object",
+        "properties": {
+          "op": {
+            "$ref": "#/components/schemas/WebFilterOperator"
+          },
+          "range": {
+            "$ref": "#/components/schemas/Range"
+          },
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "Channel": {
+        "required": [
+          "contentTypes",
+          "directions",
+          "id",
+          "name",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ChannelType"
+          },
+          "directions": {
+            "$ref": "#/components/schemas/ChannelDirections"
+          },
+          "contentTypes": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "terminals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelTerminal"
+            },
+            "nullable": true
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "ChannelAssignment": {
+        "required": [
+          "channelId"
+        ],
+        "type": "object",
+        "properties": {
+          "channelId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The unique identifier of the instance of the channel\r\nassigned to the tenant"
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "The unique identifier of the tenant assigned with the channel",
+            "nullable": true
+          },
+          "timeStamp": {
+            "type": "string",
+            "description": "The exact time of the assignment",
+            "format": "date-time"
+          }
+        },
+        "description": "The explicit assignment of a channel to a tenant"
+      },
+      "ChannelAssignmentRequest": {
+        "required": [
+          "channel",
+          "id",
+          "requester",
+          "timeStamp"
+        ],
+        "type": "object",
+        "properties": {
+          "channel": {
+            "$ref": "#/components/schemas/RequestedChannel"
+          },
+          "response": {
+            "$ref": "#/components/schemas/ChannelAssignmentResponse"
+          },
+          "requester": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The identifier of the user that made the request"
+          },
+          "timeStamp": {
+            "type": "string",
+            "description": "The exact time-stamp of the request",
+            "format": "date-time"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The unique identifier of the request"
+          },
+          "assignment": {
+            "$ref": "#/components/schemas/ChannelAssignment"
+          }
+        },
+        "description": "The request of assignment of a channel from the inventory"
+      },
+      "ChannelAssignmentResponse": {
+        "required": [
+          "responder",
+          "responseType",
+          "timeStamp"
+        ],
+        "type": "object",
+        "properties": {
+          "responder": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The unique identifier of the user responding"
+          },
+          "responseType": {
+            "$ref": "#/components/schemas/ResourceAssignmentResponseType"
+          },
+          "timeStamp": {
+            "type": "string",
+            "description": "The exact time-stamp of the response",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": "string",
+            "description": "An optional set of notes that inform on the\r\nmotivation and reasons of the response",
+            "nullable": true
+          }
+        },
+        "description": "The response to the request of assignment of a channel"
+      },
+      "ChannelCredentialType": {
+        "enum": [
+          "unknown",
+          "apiKey",
+          "basicAuth",
+          "oAuth"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ChannelCredentialType",
+          "modelAsString": true
+        }
+      },
+      "ChannelCredentials": {
+        "type": "object",
+        "properties": {
+          "apiKey": {
+            "$ref": "#/components/schemas/ApiKeyCredentials"
+          },
+          "basic": {
+            "$ref": "#/components/schemas/BasicAuthCredentials"
+          },
+          "oAuth": {
+            "$ref": "#/components/schemas/OAuthCredentials"
+          }
+        },
+        "description": "Specifies secure credentials for the authentication\r\nof channels towards providers"
+      },
+      "ChannelDirections": {
+        "enum": [
+          "default",
+          "out",
+          "in",
+          "duplex"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ChannelDirections",
+          "modelAsString": true
+        }
+      },
+      "ChannelProvider": {
+        "enum": [
+          "other",
+          "twilio",
+          "sendgrid",
+          "sendinblue",
+          "facebook",
+          "deveel",
+          "linkmobility",
+          "mailjet",
+          "telegram"
+        ],
+        "type": "string",
+        "description": "The enumeration of the available providers",
+        "x-ms-enum": {
+          "name": "ChannelProvider",
+          "modelAsString": true
+        }
+      },
+      "ChannelQuota": {
+        "required": [
+          "limit",
+          "metricType"
+        ],
+        "type": "object",
+        "properties": {
+          "metricType": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The type of metric provisioned (eg. \"messages.outbound\", \"messages.fallbacks\")"
+          },
+          "period": {
+            "$ref": "#/components/schemas/ChannelQuotaPeriod"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The provisioned upper limit of the quota",
+            "format": "int64"
+          }
+        },
+        "description": "A provisioned usage quota of a channel capability"
+      },
+      "ChannelQuotaPeriod": {
+        "enum": [
+          "none",
+          "day",
+          "month",
+          "year"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ChannelQuotaPeriod",
+          "modelAsString": true
+        }
+      },
+      "ChannelSchema": {
+        "required": [
+          "contentTypes",
+          "credentialTypes",
+          "directions",
+          "provider",
+          "receiverTypes",
+          "senderTypes",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "provider": {
+            "$ref": "#/components/schemas/ChannelProvider"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ChannelType"
+          },
+          "directions": {
+            "$ref": "#/components/schemas/ChannelDirections"
+          },
+          "credentialTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelCredentialType"
+            },
+            "description": "The type of credentials required by the channel"
+          },
+          "receiverTypes": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TerminalType"
+            },
+            "description": "The types of receiving terminals supported by the channel"
+          },
+          "senderTypes": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TerminalType"
+            },
+            "description": "The types of sender terminals supported by the channel"
+          },
+          "contentTypes": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessageContentType"
+            },
+            "description": "The types of message content supported by the channel"
+          },
+          "settings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The additional settings supported by the channel",
+            "nullable": true
+          }
+        },
+        "description": "The schema of a channel type and provider"
+      },
+      "ChannelSource": {
+        "enum": [
+          "unknown",
+          "inventory",
+          "customer"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ChannelSource",
+          "modelAsString": true
+        }
+      },
+      "ChannelStateChange": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ChannelStatus"
+          }
+        },
+        "additionalProperties": { },
+        "description": "Requests the change of status of a channel"
+      },
+      "ChannelStatus": {
+        "enum": [
+          "none",
+          "requested",
+          "active",
+          "suspended",
+          "denied"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ChannelStatus",
+          "modelAsString": true
+        }
+      },
+      "ChannelTerminal": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the terminal instance",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/TerminalType"
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the terminal",
+            "nullable": true
+          }
+        },
+        "description": "A server terminal that is bound to a specific\r\nchannel instance"
+      },
+      "ChannelType": {
+        "enum": [
+          "sms",
+          "messenger",
+          "whatsapp",
+          "email",
+          "viber",
+          "rcs",
+          "push",
+          "telegram",
+          "sandbox"
+        ],
+        "type": "string",
+        "description": "The enumeration of the types of channels supported\r\nby the platform",
+        "x-ms-enum": {
+          "name": "ChannelType",
+          "modelAsString": true
+        }
+      },
+      "ContainsFilter": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "EndsWithFilter": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "EqualFilter": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "Filter": {
+        "type": "object",
+        "properties": {
+          "logical": {
+            "$ref": "#/components/schemas/LogicalFilter"
+          },
+          "and": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter"
+            },
+            "nullable": true
+          },
+          "or": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter"
+            },
+            "nullable": true
+          },
+          "binary": {
+            "$ref": "#/components/schemas/BinaryFilter"
+          },
+          "eq": {
+            "$ref": "#/components/schemas/EqualFilter"
+          },
+          "ne": {
+            "$ref": "#/components/schemas/NotEqualFilter"
+          },
+          "gt": {
+            "$ref": "#/components/schemas/GreaterThanFilter"
+          },
+          "gte": {
+            "$ref": "#/components/schemas/GreaterThanOrEqualFilter"
+          },
+          "lt": {
+            "$ref": "#/components/schemas/LesserThanFilter"
+          },
+          "lte": {
+            "$ref": "#/components/schemas/LesserThanOrEqualFilter"
+          },
+          "startsWith": {
+            "$ref": "#/components/schemas/StartsWithFilter"
+          },
+          "endsWith": {
+            "$ref": "#/components/schemas/EndsWithFilter"
+          },
+          "contains": {
+            "$ref": "#/components/schemas/ContainsFilter"
+          },
+          "between": {
+            "$ref": "#/components/schemas/RangeFilter"
+          },
+          "not": {
+            "$ref": "#/components/schemas/Filter"
+          }
+        }
+      },
+      "FilterValue": {
+        "type": "object",
+        "properties": {
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "GeoPoint": {
+        "required": [
+          "lat",
+          "lon"
+        ],
+        "type": "object",
+        "properties": {
+          "lon": {
+            "type": "number",
+            "format": "double"
+          },
+          "lat": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "GreaterThanFilter": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "GreaterThanOrEqualFilter": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LesserThanFilter": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LesserThanOrEqualFilter": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "LogicalFilter": {
+        "required": [
+          "filters",
+          "op"
+        ],
+        "type": "object",
+        "properties": {
+          "op": {
+            "$ref": "#/components/schemas/LogicalOperator"
+          },
+          "filters": {
+            "minItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter"
+            }
+          }
+        }
+      },
+      "LogicalOperator": {
+        "enum": [
+          "and",
+          "or"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "LogicalOperator",
+          "modelAsString": true
+        }
+      },
+      "MessageContentType": {
+        "enum": [
+          "text",
+          "html",
+          "multipart",
+          "card",
+          "template",
+          "media"
+        ],
+        "type": "string",
+        "description": "Enumerates the possible types of contents in a message",
+        "x-ms-enum": {
+          "name": "MessageContentType",
+          "modelAsString": true
+        }
+      },
+      "NewChannelAssignmentRequest": {
+        "required": [
+          "channelId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_.-]+$",
+            "type": "string",
+            "description": "The name of the channel instance"
+          },
+          "directions": {
+            "$ref": "#/components/schemas/ChannelDirections"
+          },
+          "contentTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessageContentType"
+            },
+            "description": "The types of content allowed by the channel (if not set\r\nthe channel will be assigned all the allowed content types\r\nfrom the source channel)",
+            "nullable": true
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": { },
+            "description": "The settings specific for the channel instance, integrating\r\nor overriding the settings from the source channel",
+            "nullable": true
+          },
+          "terminals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NewChannelTerminal"
+            },
+            "description": "The list of terminals to be bound to the channel",
+            "nullable": true
+          },
+          "channelId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The identifier of the source channel from the inventory"
+          },
+          "quotas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelQuota"
+            },
+            "description": "The usage quotas assigned to the channel",
+            "nullable": true
+          },
+          "context": {
+            "type": "object",
+            "additionalProperties": { },
+            "description": "A context that is appended to the messages sent or received\r\nthrough the channel",
+            "nullable": true
+          }
+        },
+        "description": "A new assignment request of a channel from the inventory"
+      },
+      "NewChannelTerminal": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the terminal (if not\r\nprovided, the terminal type and address will be used for the\r\nresolution)",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/TerminalType"
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the terminal to assign (if not provided,\r\nthe terminal identifier will be used for the resolution)",
+            "nullable": true
+          }
+        },
+        "description": "The request to associate a terminal to the channel"
+      },
+      "NewUserChannel": {
+        "required": [
+          "directions",
+          "name",
+          "provider",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "quotas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelQuota"
+            },
+            "description": "The usage quotas to be enforced within the channel",
+            "nullable": true
+          },
+          "context": {
+            "type": "object",
+            "additionalProperties": { },
+            "description": "A context that is appended to the messages sent or received\r\nthrough the channel.",
+            "nullable": true
+          },
+          "name": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_.-]+$",
+            "type": "string",
+            "description": "The name of the channel instance"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ChannelType"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ChannelProvider"
+          },
+          "directions": {
+            "$ref": "#/components/schemas/ChannelDirections"
+          },
+          "contentTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessageContentType"
+            },
+            "description": "The list of allowed types of message content",
+            "nullable": true
+          },
+          "credentials": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelCredentials"
+            },
+            "description": "The credentials that will be used to access the\r\nprovider of messaging services",
+            "nullable": true
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": { },
+            "description": "Channel-specific settings (supported by the provider)",
+            "nullable": true
+          },
+          "terminals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NewChannelTerminal"
+            },
+            "description": "A list of terminals to be bound to the channel",
+            "nullable": true
+          }
+        },
+        "description": ""
+      },
+      "NotEqualFilter": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "string": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "integer": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "boolean": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "point": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "OAuthCredentials": {
+        "required": [
+          "clientId",
+          "clientSecret"
+        ],
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "clientSecret": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "audience": {
+            "type": "string",
+            "nullable": true
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "PageRequest": {
+        "required": [
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortBy": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PageSort"
+            },
+            "nullable": true
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "PageResultOfChannel": {
+        "required": [
+          "request",
+          "totalItems",
+          "totalPages"
+        ],
+        "type": "object",
+        "properties": {
+          "request": {
+            "$ref": "#/components/schemas/PageRequest"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Channel"
+            },
+            "nullable": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "self": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "first": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "next": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "previous": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "last": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          }
+        }
+      },
+      "PageResultOfUserChannel": {
+        "required": [
+          "request",
+          "totalItems",
+          "totalPages"
+        ],
+        "type": "object",
+        "properties": {
+          "request": {
+            "$ref": "#/components/schemas/PageRequest"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserChannel"
+            },
+            "nullable": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "self": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "first": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "next": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "previous": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "last": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          }
+        }
+      },
+      "PageSort": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/PageSortDirection"
+          },
+          "ascending": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "PageSortDirection": {
+        "enum": [
+          "default",
+          "asc",
+          "desc"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "PageSortDirection",
+          "modelAsString": true
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "Range": {
+        "type": "object",
+        "properties": {
+          "lower": {
+            "$ref": "#/components/schemas/FilterValue"
+          },
+          "upper": {
+            "$ref": "#/components/schemas/FilterValue"
+          }
+        }
+      },
+      "RangeFilter": {
+        "required": [
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "lower": {
+            "$ref": "#/components/schemas/FilterValue"
+          },
+          "upper": {
+            "$ref": "#/components/schemas/FilterValue"
+          }
+        }
+      },
+      "RequestedChannel": {
+        "required": [
+          "contentTypes",
+          "directions",
+          "name",
+          "sourceId"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The identifier of the source channel from the inventory"
+          },
+          "quotas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelQuota"
+            },
+            "description": "A set of usage quotas requested for assignment",
+            "nullable": true
+          },
+          "context": {
+            "type": "object",
+            "additionalProperties": { },
+            "description": "A context that is appended to the messages sent or received\r\nthrough the channel.",
+            "nullable": true
+          },
+          "name": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_.-]+$",
+            "type": "string",
+            "description": "The custom name of the channel"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ChannelType"
+          },
+          "directions": {
+            "$ref": "#/components/schemas/ChannelDirections"
+          },
+          "contentTypes": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The type of message contents to be allowed by the channel"
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": { },
+            "description": "Additional custom settings to be configured",
+            "nullable": true
+          },
+          "terminals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelTerminal"
+            },
+            "description": "An optional set of terminals to be initially associated to the channel\r\n(further ones can be added later, if the channel will be assigned).",
+            "nullable": true
+          }
+        },
+        "description": "A configured channel that was requested for assignment"
+      },
+      "ResourceAssignmentResponseType": {
+        "enum": [
+          "none",
+          "accepted",
+          "rejected"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "ResourceAssignmentResponseType",
+          "modelAsString": true
+        }
+      },
+      "StartsWithFilter": {
+        "required": [
+          "field",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "value": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "TerminalType": {
+        "enum": [
+          "phoneNumber",
+          "email",
+          "alphaNumeric",
+          "conversation",
+          "postalAddress",
+          "user",
+          "app",
+          "url"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "TerminalType",
+          "modelAsString": true
+        }
+      },
+      "UserChannel": {
+        "required": [
+          "contentTypes",
+          "name",
+          "provider",
+          "status",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ChannelStatus"
+          },
+          "lastChanged": {
+            "type": "string",
+            "description": "The exact time-stamp of the last change to the\r\nsettings and states of the channel",
+            "format": "date-time",
+            "nullable": true
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The name of the channel instance"
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "The identifier of the tenant of the cannel",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/ChannelType"
+          },
+          "provider": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The provider of messaging services used by\r\nthe channel instance"
+          },
+          "directions": {
+            "$ref": "#/components/schemas/ChannelDirections"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ChannelSource"
+          },
+          "sourceId": {
+            "type": "string",
+            "description": "If the channel is originated from the inventory, this\r\nis the identifier of the original channel",
+            "nullable": true
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": { },
+            "description": "A collection of settings of the channel instance (Note: the\r\ntypes of settings depend on the type of channel)",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the channel instance",
+            "nullable": true
+          },
+          "contentTypes": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessageContentType"
+            },
+            "description": "A list of message content types that are supported\r\nby the channel (either because of configuration or because\r\nof native capabilities of the channel)"
+          },
+          "quotas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelQuota"
+            },
+            "description": "A list of provisioned messaging quotas (limits)\r\nto the usage of the channel instance",
+            "nullable": true
+          },
+          "terminals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelTerminal"
+            },
+            "description": "A list of server terminals associated with the channel, that\r\ncan send or receive messages (accordingly to their assigned role)",
+            "nullable": true
+          },
+          "context": {
+            "type": "object",
+            "additionalProperties": { },
+            "description": "A context that is appended to the messages sent or received\r\nthrough the channel.",
+            "nullable": true
+          }
+        },
+        "description": "The instance of a channel owned by a customer"
+      },
+      "ValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "WebFilterOperator": {
+        "enum": [
+          "eq",
+          "ne",
+          "gt",
+          "gte",
+          "lt",
+          "lte",
+          "between",
+          "contains",
+          "startsWith",
+          "endsWith"
+        ],
+        "type": "string",
+        "x-ms-enum": {
+          "name": "WebFilterOperator",
+          "modelAsString": true
+        }
+      }
+    },
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://deveel.eu.auth0.com/oauth/token",
+            "scopes": {
+              "read:inventory": "Read access to an inventory of resources",
+              "write:inventory": "Write access to an inventory of resources",
+              "read:tenant": "Read access to the Tenant information",
+              "write:tenant": "Write access to tenant information",
+              "read:channel": "Read access to the information of existing channels",
+              "create:channel": "Create new channels",
+              "update:channel": "Update the information of existing channels",
+              "delete:channel": "Delete existing channels",
+              "request:channel": "Request the assignment of a channel from the inventory",
+              "assign:channel": "Assign channels to tenants",
+              "read:channel_credentials": "Read access to the credentials of channels"
+            }
+          },
+          "authorizationCode": {
+            "authorizationUrl": "https://deveel.eu.auth0.com/authorize",
+            "tokenUrl": "https://deveel.eu.auth0.com/oauth/token",
+            "scopes": {
+              "read:inventory": "Read access to an inventory of resources",
+              "write:inventory": "Write access to an inventory of resources",
+              "read:tenant": "Read access to the Tenant information",
+              "write:tenant": "Write access to tenant information",
+              "read:channel": "Read access to the information of existing channels",
+              "create:channel": "Create new channels",
+              "update:channel": "Update the information of existing channels",
+              "delete:channel": "Delete existing channels",
+              "request:channel": "Request the assignment of a channel from the inventory",
+              "assign:channel": "Assign channels to tenants",
+              "read:channel_credentials": "Read access to the credentials of channels"
+            }
+          }
+        }
+      },
+      "apiKey": {
+        "type": "apiKey",
+        "name": "X-API-KEY",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2": [
+        "read:inventory",
+        "write:inventory",
+        "read:tenant",
+        "write:tenant",
+        "read:channel",
+        "create:channel",
+        "update:channel",
+        "delete:channel",
+        "request:channel",
+        "assign:channel",
+        "read:channel_credentials"
+      ]
+    },
+    {
+      "apiKey": [ ]
+    }
+  ]
+}
