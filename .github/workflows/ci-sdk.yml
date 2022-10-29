@@ -20,6 +20,12 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
+      - name: Copying the generated Channels Client
+        uses: actions/download-artifact@v3
+        with:
+          name: channels-client
+          path: ./dotnet/src/Deveel.Ocm.Channels.Management/Management
+
       - name: Restore the .NET Dependencies
         run: dotnet restore ./dotnet
 
@@ -36,11 +42,4 @@ jobs:
         run: dotnet nuget push ./nuget/**/*.nupkg --skip-duplicate --api-key ${{secrets.DEVEEL_NUGET_TOKEN}} --source "Deveel GitHub"
 
   dotnet-channel:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-channel.yml@main
-      - uses: actions/download-artifact@v3
-        with:
-          name: channels-client
-          path: ./dotnet/src/Deveel.Ocm.Channels.Management/Management
+    uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-channel.yml@main
