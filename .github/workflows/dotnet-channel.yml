@@ -29,7 +29,7 @@ jobs:
       - name: "Generate the .NET Channel Management Client"
         run: |
           autorest --input-file=./specs/v1/dev/mgmt-v1/channel/ocm-channel-api-v1.json \
-                   --output-folder=./dotnet/src/Deveel.Ocm.Channels.Management/Management \
+                   --output-folder=./client \
                    --namespace=Deveel.Messaging.Channels.Management \
                    --csharp \
                    --add-credentials \
@@ -39,6 +39,11 @@ jobs:
                    --clear-output-folder \
                    --generation1-convenience-client \
                    --v3
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: channels-client
+          path: ./client/
 
       # - name: Add Deveel GitHub NuGet Source
       #   run: dotnet nuget add source "https://nuget.pkg.github.com/deveel/index.json" -n "Deveel GitHub" -u ${{secrets.DEVEEL_NUGET_USER}} -p ${{ secrets.DEVEEL_NUGET_TOKEN }} --store-password-in-clear-text

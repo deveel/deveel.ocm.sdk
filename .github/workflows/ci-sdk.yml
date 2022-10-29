@@ -20,8 +20,11 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
+      - name: Restore the .NET Dependencies
+        run: dotnet restore ./dotnet
+
       - name: Build the .NET SDK
-        run: dotnet build ./dotnet/Deveel.Ocm.Sdk.sln -c Release
+        run: dotnet build ./dotnet/Deveel.Ocm.Sdk.sln -c Release --no-restore
 
       - name: Test
         run: dotnet test ./test/**/*.csproj --no-build --verbosity normal -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.XUnit]*" /p:Exclude="[*.Client]*"
@@ -33,4 +36,11 @@ jobs:
         run: dotnet nuget push ./nuget/**/*.nupkg --skip-duplicate --api-key ${{secrets.DEVEEL_NUGET_TOKEN}} --source "Deveel GitHub"
 
   dotnet-channel:
-    uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-channel.yml@main
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-channel.yml@main
+      - uses: actions/download-artifact@v3
+        with:
+          name: channels-client
+          path: ./dotnet/src/Deveel.Ocm.Channels.Management/Management
