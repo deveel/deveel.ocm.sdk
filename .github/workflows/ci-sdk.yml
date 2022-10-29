@@ -28,11 +28,14 @@ jobs:
           name: channels-client
           path: ./dotnet/src/Deveel.Ocm.Channels.Management/Management
 
-      - name: Build the .NET SDK
-        run: dotnet build "./dotnet/Deveel.Ocm.Sdk.sln" -c Release --version-suffix $GITHUB_RUN_ID
+      - name: Restore the dependencies
+        run: dotnet restore ./dotnet/Deveel.Ocm.Sdk.sln
 
-      - name: Test
-        run: dotnet test ./test/**/*.csproj --no-build --verbosity normal -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.XUnit]*" /p:Exclude="[*.Client]*"
+      - name: Build the .NET SDK
+        run: dotnet build "./dotnet/Deveel.Ocm.Sdk.sln" -c Release --version-suffix $GITHUB_RUN_ID --no-restore
+
+      # - name: Test
+      #   run: dotnet test ./test/**/*.csproj --no-build --verbosity normal -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*.XUnit]*" /p:Exclude="[*.Client]*"
 
       - name: Pack Common Libraries
         run: dotnet pack "./dotnet/Deveel.Ocm.Sdk.sln" -c Release --no-restore --no-build --include-symbols --version-suffix $GITHUB_RUN_ID --output ./nuget
