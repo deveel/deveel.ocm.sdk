@@ -15,15 +15,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Setup .NET ${{matrix.dotnet}}
         uses: actions/setup-dotnet@v2.1.1
         with:
           dotnet-version: 6.0.x
-
-      - name: Listing the current dir
-        run: |
-          ls -R $GITHUB_WORKSPACE
-          ls -R .
 
       - name: Copying the generated Channels Client
         uses: actions/download-artifact@v3
