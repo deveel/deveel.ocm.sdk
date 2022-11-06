@@ -3142,44 +3142,21 @@
           },
           "totalItems": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "readOnly": true
           },
           "items": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Channel"
             },
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "totalPages": {
             "type": "integer",
             "format": "int32",
             "readOnly": true
-          },
-          "self": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "first": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "next": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "previous": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "last": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
           }
         }
       },
@@ -3196,44 +3173,21 @@
           },
           "totalItems": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "readOnly": true
           },
           "items": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/UserChannel"
             },
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
           "totalPages": {
             "type": "integer",
             "format": "int32",
             "readOnly": true
-          },
-          "self": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "first": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "next": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "previous": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
-          },
-          "last": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true
           }
         }
       },
