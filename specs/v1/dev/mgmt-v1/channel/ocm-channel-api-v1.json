@@ -1021,25 +1021,6 @@
         "operationId": "getChannelPage",
         "parameters": [
           {
-            "name": "p",
-            "in": "query",
-            "schema": {
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "sz",
-            "in": "query",
-            "schema": {
-              "maximum": 50,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
             "name": "provider",
             "in": "query",
             "schema": {
@@ -1051,6 +1032,24 @@
             "in": "query",
             "schema": {
               "$ref": "#/components/schemas/ChannelType"
+            }
+          },
+          {
+            "name": "p",
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "c",
+            "in": "query",
+            "schema": {
+              "maximum": 150,
+              "type": "integer",
+              "format": "int32"
             }
           },
           {
@@ -1070,12 +1069,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageResultOfUserChannel"
+                  "$ref": "#/components/schemas/PageQueryResultOfUserChannel"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageResultOfUserChannel"
+                  "$ref": "#/components/schemas/PageQueryResultOfUserChannel"
                 }
               }
             }
@@ -3098,6 +3097,82 @@
           }
         }
       },
+      "PageQuery": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortBy": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "PageQueryResultOfUserChannel": {
+        "required": [
+          "query",
+          "totalItems",
+          "totalPages"
+        ],
+        "type": "object",
+        "properties": {
+          "query": {
+            "$ref": "#/components/schemas/PageQuery"
+          },
+          "self": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "first": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "next": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "previous": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "last": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserChannel"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        }
+      },
       "PageRequest": {
         "required": [
           "page",
@@ -3149,37 +3224,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Channel"
-            },
-            "nullable": true,
-            "readOnly": true
-          },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        }
-      },
-      "PageResultOfUserChannel": {
-        "required": [
-          "request",
-          "totalItems",
-          "totalPages"
-        ],
-        "type": "object",
-        "properties": {
-          "request": {
-            "$ref": "#/components/schemas/PageRequest"
-          },
-          "totalItems": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserChannel"
             },
             "nullable": true,
             "readOnly": true
