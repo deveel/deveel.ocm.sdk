@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Channels Management API v1",
+    "title": "Channel Management API v1",
     "contact": {
       "name": "Antonello Provenzano",
       "email": "antonello@deveel.com"
@@ -967,6 +967,22 @@
               }
             }
           },
+          "400": {
+            "description": "The name of the channel is not well formatted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
           "404": {
             "description": "No channel with the given name was found"
           },
@@ -1012,75 +1028,165 @@
         ]
       }
     },
-    "/page": {
-      "get": {
+    "/{channelId}/state": {
+      "put": {
         "tags": [
           "channel"
         ],
-        "summary": "Gets a page of Channels",
-        "operationId": "getChannelPage",
+        "summary": "Changes the State of a Channel",
+        "operationId": "changeChannelState",
         "parameters": [
           {
-            "name": "provider",
-            "in": "query",
+            "name": "channelId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/ChannelType"
-            }
-          },
-          {
-            "name": "p",
-            "in": "query",
-            "schema": {
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "c",
-            "in": "query",
-            "schema": {
-              "maximum": 150,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "s",
-            "in": "query",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChannelStateChange"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChannelStateChange"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChannelStateChange"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChannelStateChange"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
-            "description": "The page of channels of the current user",
+            "description": "The channel was updated",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageQueryResultOfUserChannel"
+                  "$ref": "#/components/schemas/UserChannel"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageQueryResultOfUserChannel"
+                  "$ref": "#/components/schemas/UserChannel"
                 }
               }
             }
           },
+          "404": {
+            "description": "No channel with the given ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
           "400": {
-            "description": "One or more of the parameters is invalid",
+            "description": "The new state is invalid for the channel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "401": {
+            "description": "The request is unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          },
+          "403": {
+            "description": "The requested action is forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "x-ms-error-response": true
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "update:channel"
+            ]
+          }
+        ]
+      }
+    },
+    "/{channelName}": {
+      "head": {
+        "tags": [
+          "channel"
+        ],
+        "summary": "Checks if a Channel Exists",
+        "operationId": "channelExists",
+        "parameters": [
+          {
+            "name": "channelName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-zA-Z0-9_.-]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "A channel with the given name exists"
+          },
+          "404": {
+            "description": "None channel with the given name was found"
+          },
+          "400": {
+            "description": "The name of the channel is invalid",
             "content": {
               "application/json": {
                 "schema": {
@@ -1271,89 +1377,6 @@
           {
             "oauth2": [
               "update:channel"
-            ]
-          }
-        ]
-      }
-    },
-    "/{channelName}": {
-      "head": {
-        "tags": [
-          "channel"
-        ],
-        "summary": "Checks if a Channel Exists",
-        "operationId": "channelExists",
-        "parameters": [
-          {
-            "name": "channelName",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "pattern": "^[a-zA-Z0-9_.-]+$",
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "A channel with the given name exists"
-          },
-          "404": {
-            "description": "None channel with the given name was found"
-          },
-          "400": {
-            "description": "The name of the channel is invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationProblemDetails"
-                }
-              }
-            },
-            "x-ms-error-response": true
-          },
-          "401": {
-            "description": "The request is unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            },
-            "x-ms-error-response": true
-          },
-          "403": {
-            "description": "The requested action is forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            },
-            "x-ms-error-response": true
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "read:channel"
             ]
           }
         ]
@@ -1741,82 +1764,75 @@
         ]
       }
     },
-    "/{channelId}/state": {
-      "put": {
+    "/page": {
+      "get": {
         "tags": [
           "channel"
         ],
-        "summary": "Changes the State of a Channel",
-        "operationId": "changeChannelState",
+        "summary": "Gets a page of Channels",
+        "operationId": "getChannelPage",
         "parameters": [
           {
-            "name": "channelId",
-            "in": "path",
-            "required": true,
+            "name": "provider",
+            "in": "query",
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ChannelType"
+            }
+          },
+          {
+            "name": "p",
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "c",
+            "in": "query",
+            "schema": {
+              "maximum": 150,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "s",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChannelStateChange"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChannelStateChange"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChannelStateChange"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChannelStateChange"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
-            "description": "The channel was updated",
+            "description": "The page of channels of the current user",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserChannel"
+                  "$ref": "#/components/schemas/PageQueryResultOfUserChannel"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserChannel"
+                  "$ref": "#/components/schemas/PageQueryResultOfUserChannel"
                 }
               }
             }
           },
-          "404": {
-            "description": "No channel with the given ID was found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            },
-            "x-ms-error-response": true
-          },
           "400": {
-            "description": "The new state is invalid for the channel",
+            "description": "One or more of the parameters is invalid",
             "content": {
               "application/json": {
                 "schema": {
@@ -1867,7 +1883,7 @@
         "security": [
           {
             "oauth2": [
-              "update:channel"
+              "read:channel"
             ]
           }
         ]
@@ -1963,23 +1979,31 @@
         "operationId": "getChannelInventoryPage",
         "parameters": [
           {
-            "name": "number",
+            "name": "p",
             "in": "query",
             "schema": {
               "minimum": 1,
               "type": "integer",
-              "format": "int32",
-              "default": 1
+              "format": "int32"
             }
           },
           {
-            "name": "size",
+            "name": "c",
             "in": "query",
             "schema": {
-              "maximum": 50,
+              "maximum": 150,
               "type": "integer",
-              "format": "int32",
-              "default": 10
+              "format": "int32"
+            }
+          },
+          {
+            "name": "s",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -3583,6 +3607,11 @@
       }
     },
     "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "name": "X-API-KEY",
+        "in": "header"
+      },
       "oauth2": {
         "type": "oauth2",
         "flows": {
@@ -3620,15 +3649,13 @@
             }
           }
         }
-      },
-      "apiKey": {
-        "type": "apiKey",
-        "name": "X-API-KEY",
-        "in": "header"
       }
     }
   },
   "security": [
+    {
+      "apiKey": [ ]
+    },
     {
       "oauth2": [
         "read:inventory",
@@ -3643,9 +3670,6 @@
         "assign:channel",
         "read:channel_credentials"
       ]
-    },
-    {
-      "apiKey": [ ]
     }
   ]
 }
