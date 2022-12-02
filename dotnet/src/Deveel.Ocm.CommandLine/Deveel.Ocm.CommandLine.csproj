@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <PackAsTool>true</PackAsTool>
+	  <AssemblyName>ocm</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Scrutor" Version="4.2.0" />
+    <PackageReference Include="Spectre.Console" Version="0.45.0" />
+    <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.22272.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Deveel.Ocm.CommandLine.Abstractions\Deveel.Ocm.CommandLine.Abstractions.csproj" />
+	  <!-- TODO: We should instead design it as a plugin-based logic that doesn't require hard references -->
+    <ProjectReference Include="..\Deveel.Ocm.CommandLine.Terminals\Deveel.Ocm.CommandLine.Terminals.csproj" />
+	  <ProjectReference Include="..\Deveel.Ocm.CommandLine.Auth\Deveel.Ocm.CommandLine.Auth.csproj" />
+
+  </ItemGroup>
+
+</Project>
