@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.CommandLine.Term
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.CommandLine.Auth", "src\Deveel.Ocm.CommandLine.Auth\Deveel.Ocm.CommandLine.Auth.csproj", "{FB1085F1-43C2-4BF4-B801-4495D7189304}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clients", "clients", "{D8038081-4DE6-4D94-A40C-8AFAE445CDDD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cli", "cli", "{E6AC7408-650B-46B3-B756-FD784AA7226A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +58,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{90FE9AFC-4684-4069-BC1B-E7FA1E451F5D} = {D8038081-4DE6-4D94-A40C-8AFAE445CDDD}
+		{A215272C-8115-4450-9C91-6568E6EB4443} = {E6AC7408-650B-46B3-B756-FD784AA7226A}
+		{36B5BDFC-F77E-4715-BE57-551C00C58280} = {E6AC7408-650B-46B3-B756-FD784AA7226A}
+		{7EA7D87A-A8E5-4D8A-A21A-BE513EF5877B} = {E6AC7408-650B-46B3-B756-FD784AA7226A}
+		{FB1085F1-43C2-4BF4-B801-4495D7189304} = {E6AC7408-650B-46B3-B756-FD784AA7226A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {124CFFED-575F-4579-A50A-31B18E90BE43}
