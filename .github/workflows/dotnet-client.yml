@@ -1,64 +1,57 @@
-name: ".NET Client Client Generation"
+name: ".NET Client Generation"
 
 on:
   workflow_call:
     inputs:
-      env:
+      serviceName:
         type: string
-        description: "The environment of the client"
-        required: false
-        default: dev
-      artifactName:
-        type: string
-        description: "The name of the artifact to restore"
+        description: "The name of the service that the client addresses"
         required: true
-      clientType:
+      plane:
         type: string
-        description: "The type of client to generate and deploy"
+        description: "The plane where the client exists (data or management)"
         required: true
       commitId:
         type: string
         description: "The reference to the commit to build"
         required: false
         default: main
+      version:
+        type: string
+        required: true
+        description: The version number of the specification
+      namespace:
+        type: string
+        required: true
+        description: The namespace of the generated client code
+      clientName:
+         type: string
+         required: false
+         description: "The name of client class (if applicable)"
+      
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - run: npm install -g autorest
 
-    - name: "Generate the .NET Management Client"
-      if: ${{inputs.clientType == 'management'}}
+    - name: "Generate the .NET Client"
       run: |
-        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.sdk/${{inputs.commitId}}/openapi/${{inputs.artifactName}} `
-        --output-folder=.\\dotnet\\src\\Deveel.Ocm.Management.Client\\Messaging\\Management `
-        --project-folder=.\\dotnet\\src\\Deveel.Ocm.Management.Client `
-        --namespace=Deveel.Messaging.Management `
+        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.specs/${{inputs.commitId}}/specs/${{inputs.serviceName}}/${{inputs.plane}}/${{inputs.version}}/${{inputs.serviceName}}-${{inputs.version}}.json `
+        --output-folder=.\client `
+        --namespace=${{inputs.namespace}} `
         --csharp `
         --add-credentials `
-        --sync-methods=all `
-        --override-client-name=ManagementClient `
-        --use-datetimeoffset `
-        --head-as-boolean `
-        --public-clients `
-        --version=3.0.6349 `
-        --v3
+        --override-client-name=${{inputs.clientName}} `
+	    --public-clients `
+	    --skip-csproj `
+	    --clear-output-folder `
+	    --generation1-convenience-client `
+	    --v3
 
-    - name: "Generate the .NET Messaging Client"
-      if: ${{inputs.clientType == 'messaging'}}
-      run: |
-        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.sdk/${{inputs.commitId}}/openapi/${{inputs.artifactName}} `
-        --output-folder=.\\dotnet\\src\\Deveel.Ocm.Client\\Messaging `
-        --project-folder=.\\dotnet\\src\\Deveel.Ocm.Client `
-        --namespace=Deveel.Messaging `
-        --csharp `
-        --add-credentials `
-        --sync-methods=all `
-        --override-client-name=MessagingClient `
-        --use-datetimeoffset `
-        --head-as-boolean `
-        --public-clients `
-        --version=3.0.6349 `
-        --v3
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ${{inputs.serviceName}}-client
+        path: ./client/
