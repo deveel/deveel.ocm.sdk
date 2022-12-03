@@ -39,8 +39,8 @@ jobs:
 
     - name: "Generate the .NET Client"
       run: |
-        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.specs/${{inputs.commitId}}/specs/${{inputs.serviceName}}/${{inputs.plane}}/${{inputs.version}}/${{inputs.serviceName}}-${{inputs.version}}.json \
-        --output-folder=.\client \
+        autorest --input-file="https://raw.githubusercontent.com/deveel/deveel.ocm.specs/${{inputs.commitId}}/specs/${{inputs.serviceName}}/${{inputs.plane}}/${{inputs.version}}/${{inputs.serviceName}}-${{inputs.version}}.json" \
+        --output-folder="./client/" \
         --namespace=${{inputs.namespace}} \
         --csharp \
         --add-credentials \
@@ -54,4 +54,4 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: ${{inputs.serviceName}}-client
-        path: ./client/
+        path: "./client/"
