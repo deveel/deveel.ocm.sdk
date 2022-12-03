@@ -25,7 +25,7 @@ jobs:
       - name: Copying the generated Terminals Client
         uses: actions/download-artifact@v3
         with:
-          name: terminals-client
+          name: terminal-client
           path: ./dotnet/src/Deveel.Ocm.Terminal.Client/Terminals/Management
 
       - name: Add Deveel GitHub NuGet Source
