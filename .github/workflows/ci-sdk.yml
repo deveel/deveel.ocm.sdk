@@ -52,5 +52,5 @@ jobs:
       serviceName: terminal
       plane: management
       version: v1
-      namespace: Deveel.Messaging.Terminals
+      namespace: Deveel.Messaging.Terminals.Management
       clientName: TerminalClient
