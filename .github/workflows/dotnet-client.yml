@@ -28,14 +28,14 @@ on:
          type: string
          required: false
          description: "The name of client class (if applicable)"
-      
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - run: npm install -g autorest
+    - name: Install AutoRest
+      run: npm install -g autorest
 
     - name: "Generate the .NET Client"
       run: |
