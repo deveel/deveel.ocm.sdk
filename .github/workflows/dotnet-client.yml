@@ -39,16 +39,16 @@ jobs:
 
     - name: "Generate the .NET Client"
       run: |
-        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.specs/${{inputs.commitId}}/specs/${{inputs.serviceName}}/${{inputs.plane}}/${{inputs.version}}/${{inputs.serviceName}}-${{inputs.version}}.json `
-        --output-folder=.\client `
-        --namespace=${{inputs.namespace}} `
-        --csharp `
-        --add-credentials `
-        --override-client-name=${{inputs.clientName}} `
-	    --public-clients `
-	    --skip-csproj `
-	    --clear-output-folder `
-	    --generation1-convenience-client `
+        autorest --input-file=https://raw.githubusercontent.com/deveel/deveel.ocm.specs/${{inputs.commitId}}/specs/${{inputs.serviceName}}/${{inputs.plane}}/${{inputs.version}}/${{inputs.serviceName}}-${{inputs.version}}.json \
+        --output-folder=.\client \
+        --namespace=${{inputs.namespace}} \
+        --csharp \
+        --add-credentials \
+        --override-client-name=${{inputs.clientName}} \
+	    --public-clients \
+	    --skip-csproj \
+	    --clear-output-folder \
+	    --generation1-convenience-client \
 	    --v3
 
     - uses: actions/upload-artifact@v3
