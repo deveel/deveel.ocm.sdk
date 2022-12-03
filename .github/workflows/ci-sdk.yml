@@ -47,7 +47,7 @@ jobs:
         run: dotnet nuget push ./nuget/**/*.nupkg --skip-duplicate --api-key ${{secrets.DEVEEL_NUGET_TOKEN}} --source "Deveel GitHub"
 
   dotnet-terminal-client:
-    uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-client.yml
+    uses: ./.github/workflows/dotnet-client.yml
     with:
       serviceName: terminal
       plane: management
