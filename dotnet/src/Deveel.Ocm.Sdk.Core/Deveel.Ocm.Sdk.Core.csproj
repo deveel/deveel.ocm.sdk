@@ -5,6 +5,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <RootNamespace>Deveel</RootNamespace>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Authors>Antonello Provenzano</Authors>
+    <Company>Deveel AS</Company>
+    <Copyright>(C) 2022-2023 Deveel AS</Copyright>
+    <PackageProjectUrl>https://ocm.deveel.net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/deveel/deveel.ocm.sdk</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>rest openapi client terminal ocm omnichannel messaging message phone email management</PackageTags>
+    <Description>Provides abstractions and foundational classes to implement a Software Development Kit (SDK) to interface the Deveel OCM platform</Description>
+    <PackageIcon>deveel-logo.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,4 +25,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\..\deveel-logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 </Project>
