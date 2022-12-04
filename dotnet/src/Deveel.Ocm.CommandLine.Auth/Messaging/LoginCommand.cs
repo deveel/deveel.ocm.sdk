@@ -34,14 +34,17 @@ namespace Deveel.Messaging {
 
 		public static Option<string?> TenantOption { get; set; }
 
-		public new class Handler : DefaultCommandHandler {
+		public new class Handler : ICommandHandler {
 			private readonly IConfiguration configuration;
 
 			public Handler(IConfiguration configuration) {
 				this.configuration = configuration;
 			}
 
-			protected override async Task ExecuteAsync(InvocationContext context, CancellationToken cancellationToken = default) {
+			public int Invoke(InvocationContext context)
+				=> InvokeAsync(context).ConfigureAwait(false).GetAwaiter().GetResult();
+
+			public async Task<int> InvokeAsync(InvocationContext context) {
 				var browser = new SystemBrowser();
 				string redirectUri = string.Format($"http://127.0.0.1:{browser.Port}");
 
@@ -75,6 +78,7 @@ namespace Deveel.Messaging {
 
 				}
 
+				return 0;
 			}
 		}
 	}

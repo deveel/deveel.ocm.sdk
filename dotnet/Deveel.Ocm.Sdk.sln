@@ -15,11 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.Sdk", "src\Devee
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.CommandLine.Terminals", "src\Deveel.Ocm.CommandLine.Terminals\Deveel.Ocm.CommandLine.Terminals.csproj", "{7EA7D87A-A8E5-4D8A-A21A-BE513EF5877B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.CommandLine.Auth", "src\Deveel.Ocm.CommandLine.Auth\Deveel.Ocm.CommandLine.Auth.csproj", "{FB1085F1-43C2-4BF4-B801-4495D7189304}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.CommandLine.Auth", "src\Deveel.Ocm.CommandLine.Auth\Deveel.Ocm.CommandLine.Auth.csproj", "{FB1085F1-43C2-4BF4-B801-4495D7189304}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clients", "clients", "{D8038081-4DE6-4D94-A40C-8AFAE445CDDD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cli", "cli", "{E6AC7408-650B-46B3-B756-FD784AA7226A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.Route.Client", "src\Deveel.Ocm.Route.Client\Deveel.Ocm.Route.Client.csproj", "{1F2F87E5-3BBB-4A82-B989-FBAE01D5C7D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{FB1085F1-43C2-4BF4-B801-4495D7189304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB1085F1-43C2-4BF4-B801-4495D7189304}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB1085F1-43C2-4BF4-B801-4495D7189304}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2F87E5-3BBB-4A82-B989-FBAE01D5C7D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F2F87E5-3BBB-4A82-B989-FBAE01D5C7D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F2F87E5-3BBB-4A82-B989-FBAE01D5C7D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F2F87E5-3BBB-4A82-B989-FBAE01D5C7D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +71,7 @@ Global
 		{36B5BDFC-F77E-4715-BE57-551C00C58280} = {E6AC7408-650B-46B3-B756-FD784AA7226A}
 		{7EA7D87A-A8E5-4D8A-A21A-BE513EF5877B} = {E6AC7408-650B-46B3-B756-FD784AA7226A}
 		{FB1085F1-43C2-4BF4-B801-4495D7189304} = {E6AC7408-650B-46B3-B756-FD784AA7226A}
+		{1F2F87E5-3BBB-4A82-B989-FBAE01D5C7D7} = {D8038081-4DE6-4D94-A40C-8AFAE445CDDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE0775D6-CD64-4AD6-B686-70DF29628758}
