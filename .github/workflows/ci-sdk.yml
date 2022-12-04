@@ -63,7 +63,7 @@ jobs:
       clientName: TerminalClient
 
   dotnet-route-client:
-    uses: ./.github/workflows/dotnetclient.yml
+    uses: ./.github/workflows/dotnet-client.yml
     with:
       serviceName: route
       plane: management
