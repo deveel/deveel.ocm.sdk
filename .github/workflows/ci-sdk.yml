@@ -36,6 +36,13 @@ jobs:
           name: route-client
           path: ./dotnet/src/Deveel.Ocm.Route.Client/Routes/Management
 
+      - name: Copying the generated Channel Client
+        uses: actions/download-artifact@v3
+        with:
+          name: channel-client
+          path: ./dotnet/src/Deveel.Ocm.Channel.Client/Channels/Management
+
+
       - name: Add Deveel GitHub NuGet Source
         run: dotnet nuget add source "https://nuget.pkg.github.com/deveel/index.json" -n "Deveel GitHub" -u ${{secrets.DEVEEL_NUGET_USER}} -p ${{ secrets.DEVEEL_NUGET_TOKEN }} --store-password-in-clear-text
 
