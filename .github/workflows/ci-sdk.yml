@@ -12,6 +12,7 @@ jobs:
     needs:
       - dotnet-terminal-client
       - dotnet-route-client
+      - dotnet-channel-client
 
     runs-on: ubuntu-latest
 
@@ -70,3 +71,12 @@ jobs:
       version: v1
       namespace: Deveel.Messaging.Routes.Management
       clientName: RouteClient
+
+  dotnet-channel-client:
+     uses: ./.github/workflows/dotnet-client.yml
+     with:
+       serviceName: channel
+       plane: management
+       version: v1
+       namespace: Deveel.Messaging.Channels.Management
+       clientName: ChannelClient
