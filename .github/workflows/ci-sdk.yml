@@ -42,6 +42,11 @@ jobs:
           name: channel-client
           path: ./dotnet/src/Deveel.Ocm.Channel.Client/Channels/Management
 
+      - name: Copying the generated Webhook Client
+        uses: actions/download-artifact@v3
+        with:
+          name: webhook-client
+          path: ./dotnet/src/Deveel.Ocm.Webhook.Client/Webhooks/Management
 
       - name: Add Deveel GitHub NuGet Source
         run: dotnet nuget add source "https://nuget.pkg.github.com/deveel/index.json" -n "Deveel GitHub" -u ${{secrets.DEVEEL_NUGET_USER}} -p ${{ secrets.DEVEEL_NUGET_TOKEN }} --store-password-in-clear-text
@@ -80,10 +85,19 @@ jobs:
       clientName: RouteClient
 
   dotnet-channel-client:
-     uses: ./.github/workflows/dotnet-client.yml
-     with:
-       serviceName: channel
-       plane: management
-       version: v1
-       namespace: Deveel.Messaging.Channels.Management
-       clientName: ChannelClient
+    uses: ./.github/workflows/dotnet-client.yml
+    with:
+      serviceName: channel
+      plane: management
+      version: v1
+      namespace: Deveel.Messaging.Channels.Management
+      clientName: ChannelClient
+
+  dotnet-webhook-client:
+    uses: ./.github/workflows/dotnet-client.yml
+    with:
+      serviceName: webhook
+      plane: management
+      version: v1
+      namespace: Deveel.Messaging.Webhooks.Management
+      clientName: WebhookClient
