@@ -348,8 +348,10 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
 /dotnet/make-clients.ps1
-/dotnet/src/Deveel.Ocm.Channels.Management/Management
 /make-clients.ps1
+/dotnet/src/Deveel.Ocm.Channel.Client/Channels/Management/
 /dotnet/src/Deveel.Ocm.Route.Client/Routes/Management/
 /dotnet/src/Deveel.Ocm.Terminal.Client/Terminals/Management/
+/dotnet/src/Deveel.Ocm.Webhook.Client/Webhooks/Management/

@@ -34,7 +34,7 @@ namespace Deveel.Messaging.Terminals.Management
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://api.ocm.deveel.net");
+            _endpoint = endpoint ?? new Uri("https://api.ocm.deveel.net/terminal");
         }
 
         internal HttpMessage CreateCreateTerminalRequest(NewServerTerminal body)
