@@ -13,8 +13,8 @@
     <PackageProjectUrl>https://ocm.deveel.net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/deveel/deveel.ocm.sdk</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>rest openapi client channel ocm omnichannel messaging management</PackageTags>
-    <Description>A REST client library that provides management functions to administer the Channels within the Deveel OCM platform, that are the foundation block of messaging</Description>
+    <PackageTags>rest openapi client channel channels sms email ocm omnichannel messaging message management</PackageTags>
+    <Description>A REST client library that provides management functions to administer the Channels that drive the messaging within the Deveel OCM platform</Description>
     <PackageIcon>deveel-logo.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
@@ -38,5 +38,9 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Channel\Management\" />
   </ItemGroup>
 </Project>

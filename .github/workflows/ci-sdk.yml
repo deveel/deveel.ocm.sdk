@@ -12,6 +12,7 @@ jobs:
     needs:
       - dotnet-terminal-client
       - dotnet-route-client
+      - dotnet-channel-client
 
     runs-on: ubuntu-latest
 
@@ -45,7 +46,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: webhook-client
-          path: ./dotnet/src/Deveel.Ocm.Webhooks.Client/Webhooks/Management
+          path: ./dotnet/src/Deveel.Ocm.Webhook.Client/Webhooks/Management
 
       - name: Add Deveel GitHub NuGet Source
         run: dotnet nuget add source "https://nuget.pkg.github.com/deveel/index.json" -n "Deveel GitHub" -u ${{secrets.DEVEEL_NUGET_USER}} -p ${{ secrets.DEVEEL_NUGET_TOKEN }} --store-password-in-clear-text

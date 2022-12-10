@@ -354,4 +354,4 @@ MigrationBackup/
 /dotnet/src/Deveel.Ocm.Channel.Client/Channels/Management/
 /dotnet/src/Deveel.Ocm.Route.Client/Routes/Management/
 /dotnet/src/Deveel.Ocm.Terminal.Client/Terminals/Management/
-/dotnet/src/Deveel.Ocm.Webhook.Client/Webhooks/Management/
+/dotnet/src/Deveel.Ocm.Channel.Client/Channels/Management/
