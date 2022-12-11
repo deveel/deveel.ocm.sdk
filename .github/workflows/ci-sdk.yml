@@ -13,6 +13,7 @@ jobs:
       - dotnet-terminal-client
       - dotnet-route-client
       - dotnet-channel-client
+      - dotnet-webhook-client
 
     runs-on: ubuntu-latest
 
