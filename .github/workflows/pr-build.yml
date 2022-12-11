@@ -10,22 +10,57 @@ on:
 jobs:
   build:
     needs: 
-    - dotnet-mgmt-client
-    - dotnet-msg-client
+      - dotnet-terminal-client
+      - dotnet-route-client
+      - dotnet-channel-client
+      - dotnet-webhook-client
+      - dotnet-message-client
 
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        dotnet: [6.0.x]
         
     runs-on: ${{matrix.os}}
 
     steps:
     
-      - name: Setup .NET ${{matrix.dotnet}}
+      - name: Setup .NET 7.0
         uses: actions/setup-dotnet@v2.1.1
         with:
-          dotnet-version: ${{matrix.dotnet}}
+          dotnet-version: 7.0.x
+
+      - name: Copying the generated Terminals Client
+        uses: actions/download-artifact@v3
+        with:
+          name: terminal-client
+          path: ./dotnet/src/Deveel.Ocm.Terminal.Client/Terminals/Management
+
+      - name: Copying the generated Routes Client
+        uses: actions/download-artifact@v3
+        with:
+          name: route-client
+          path: ./dotnet/src/Deveel.Ocm.Route.Client/Routes/Management
+
+      - name: Copying the generated Channel Client
+        uses: actions/download-artifact@v3
+        with:
+          name: channel-client
+          path: ./dotnet/src/Deveel.Ocm.Channel.Client/Channels/Management
+
+      - name: Copying the generated Webhook Client
+        uses: actions/download-artifact@v3
+        with:
+          name: webhook-client
+          path: ./dotnet/src/Deveel.Ocm.Webhook.Client/Webhooks/Management
+
+      - name: Copying the generated Message Client
+        uses: actions/download-artifact@v3
+        with:
+          name: message-client
+          path: ./dotnet/src/Deveel.Ocm.Message.Client/Messaging
+
+      - name: Add Deveel GitHub NuGet Source
+        run: dotnet nuget add source "https://nuget.pkg.github.com/deveel/index.json" -n "Deveel GitHub" -u ${{secrets.DEVEEL_NUGET_USER}} -p ${{ secrets.DEVEEL_NUGET_TOKEN }} --store-password-in-clear-text
 
       - name: Restore the .NET Dependencies
         run: dotnet restore Deveel.Ocm.Sdk.sln
@@ -36,16 +71,47 @@ jobs:
       - name: Test
         run: dotnet test ./test/**/*.csproj --no-build --verbosity normal -c Release
 
-  dotnet-mgmt-client:
-    uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-client.yml@main
+  dotnet-terminal-client:
+    uses: ./.github/workflows/dotnet-client.yml
     with:
-      artifactName: ocm-mgmt-api-v1.json
-      clientType: management
-      commitId: $GITHUB_SHA
+      serviceName: terminal
+      plane: management
+      version: v1
+      namespace: Deveel.Messaging.Terminals.Management
+      clientName: TerminalClient
 
-  dotnet-msg-client:
-    uses: deveel/deveel.ocm.sdk/.github/workflows/dotnet-client.yml@main
+  dotnet-route-client:
+    uses: ./.github/workflows/dotnet-client.yml
     with:
-      artifactName: ocm-api-v1.json
-      clientType: messaging
-      commitId: $GITHUB_SHA
+      serviceName: route
+      plane: management
+      version: v1
+      namespace: Deveel.Messaging.Routes.Management
+      clientName: RouteClient
+
+  dotnet-channel-client:
+    uses: ./.github/workflows/dotnet-client.yml
+    with:
+      serviceName: channel
+      plane: management
+      version: v1
+      namespace: Deveel.Messaging.Channels.Management
+      clientName: ChannelClient
+
+  dotnet-webhook-client:
+    uses: ./.github/workflows/dotnet-client.yml
+    with:
+      serviceName: webhook
+      plane: management
+      version: v1
+      namespace: Deveel.Messaging.Webhooks.Management
+      clientName: WebhookClient
+
+  dotnet-message-client:
+    uses: ./.github/workflows/dotnet-client.yml
+    with:
+      serviceName: message
+      plane: data
+      version: v1
+      namespace: Deveel.Messaging
+      clientName: MessageClient

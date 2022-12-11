@@ -14,8 +14,13 @@ jobs:
       - dotnet-route-client
       - dotnet-channel-client
       - dotnet-webhook-client
+      - dotnet-message-client
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{matrix.os}}
 
     steps:
       - uses: actions/checkout@v2
@@ -48,6 +53,12 @@ jobs:
         with:
           name: webhook-client
           path: ./dotnet/src/Deveel.Ocm.Webhook.Client/Webhooks/Management
+
+      - name: Copying the generated Message Client
+        uses: actions/download-artifact@v3
+        with:
+          name: message-client
+          path: ./dotnet/src/Deveel.Ocm.Message.Client/Messaging
 
       - name: Add Deveel GitHub NuGet Source
         run: dotnet nuget add source "https://nuget.pkg.github.com/deveel/index.json" -n "Deveel GitHub" -u ${{secrets.DEVEEL_NUGET_USER}} -p ${{ secrets.DEVEEL_NUGET_TOKEN }} --store-password-in-clear-text
@@ -102,3 +113,12 @@ jobs:
       version: v1
       namespace: Deveel.Messaging.Webhooks.Management
       clientName: WebhookClient
+
+  dotnet-message-client:
+    uses: ./.github/workflows/dotnet-client.yml
+    with:
+      serviceName: message
+      plane: data
+      version: v1
+      namespace: Deveel.Messaging
+      clientName: MessageClient
