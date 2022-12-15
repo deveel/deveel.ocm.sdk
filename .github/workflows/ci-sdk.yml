@@ -15,6 +15,7 @@ jobs:
       - dotnet-channel-client
       - dotnet-webhook-client
       - dotnet-message-client
+      - dotnet-iam-client
 
     runs-on: ubuntu-latest
 
