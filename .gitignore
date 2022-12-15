@@ -356,3 +356,4 @@ MigrationBackup/
 /dotnet/src/Deveel.Ocm.Terminal.Client/Terminals/Management/
 /dotnet/src/Deveel.Ocm.Webhook.Client/Webhooks/Management/
 /dotnet/src/Deveel.Ocm.Message.Client/Messaging/
+/dotnet/src/Deveel.Ocm.Security.Client/Security/Management/

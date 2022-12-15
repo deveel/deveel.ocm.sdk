@@ -29,6 +29,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.Webhook.Client",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.Message.Client", "src\Deveel.Ocm.Message.Client\Deveel.Ocm.Message.Client.csproj", "{C9D49F92-FDA4-4FC8-86ED-F331D2155203}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5BDFB521-C1E4-4B7A-A50E-7DDA66A8A9F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.Security.Client", "src\Deveel.Ocm.Security.Client\Deveel.Ocm.Security.Client.csproj", "{F233CE4C-A5A8-42A7-9ED0-C5282EA4A6F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +83,10 @@ Global
 		{C9D49F92-FDA4-4FC8-86ED-F331D2155203}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9D49F92-FDA4-4FC8-86ED-F331D2155203}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9D49F92-FDA4-4FC8-86ED-F331D2155203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F233CE4C-A5A8-42A7-9ED0-C5282EA4A6F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F233CE4C-A5A8-42A7-9ED0-C5282EA4A6F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F233CE4C-A5A8-42A7-9ED0-C5282EA4A6F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F233CE4C-A5A8-42A7-9ED0-C5282EA4A6F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +101,7 @@ Global
 		{F556225F-8F8C-4A31-9E4A-695EE1DFEE12} = {D8038081-4DE6-4D94-A40C-8AFAE445CDDD}
 		{972EB8DB-4D1D-4A26-9E95-5A1DD455E910} = {D8038081-4DE6-4D94-A40C-8AFAE445CDDD}
 		{C9D49F92-FDA4-4FC8-86ED-F331D2155203} = {D8038081-4DE6-4D94-A40C-8AFAE445CDDD}
+		{F233CE4C-A5A8-42A7-9ED0-C5282EA4A6F2} = {5BDFB521-C1E4-4B7A-A50E-7DDA66A8A9F0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE0775D6-CD64-4AD6-B686-70DF29628758}

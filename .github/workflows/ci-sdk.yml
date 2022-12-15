@@ -50,6 +50,12 @@ jobs:
           name: webhook-client
           path: ./dotnet/src/Deveel.Ocm.Webhook.Client/Webhooks/Management
 
+      - name: Copying the generated Security Client
+        uses: actions/download-artifact@v3
+        with:
+          name: iam-client
+          path: ./dotnet/src/Deveel.Ocm.Security.Client/Security/Management
+
       - name: Copying the generated Message Client
         uses: actions/download-artifact@v3
         with:
@@ -118,3 +124,12 @@ jobs:
       version: v1
       namespace: Deveel.Messaging
       clientName: MessageClient
+
+  dotnet-iam-client:
+    uses: ./.github/workflows/dotnet-client.yml
+    with:
+      serviceName: iam
+      plane: management
+      version: v1
+      namespace: Deveel.Messaging.Security.Management
+      clientName: SecurityClient
