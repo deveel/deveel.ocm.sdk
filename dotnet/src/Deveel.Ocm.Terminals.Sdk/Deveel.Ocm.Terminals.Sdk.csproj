@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Deveel.Messaging</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Deveel.Ocm.Sdk.Core\Deveel.Ocm.Sdk.Core.csproj" />
+    <ProjectReference Include="..\Deveel.Ocm.Terminal.Client\Deveel.Ocm.Terminal.Client.csproj" />
+  </ItemGroup>
+
+</Project>

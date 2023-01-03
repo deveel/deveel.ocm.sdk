@@ -12,9 +12,9 @@ using Microsoft.AspNetCore.Builder;
 namespace Deveel.Messaging {
 	public class SystemBrowser : IBrowser {
 		public int Port { get; }
-		private readonly string _path;
+		private readonly string? _path;
 
-		public SystemBrowser(int? port = null, string path = null) {
+		public SystemBrowser(int? port = null, string? path = null) {
 			_path = path;
 
 			if (!port.HasValue) {
@@ -79,17 +79,18 @@ namespace Deveel.Messaging {
 
 		public string Url => _url;
 
-		public LoopbackHttpListener(int port, string path = null) {
+		public LoopbackHttpListener(int port, string? path = null) {
 			path = path ?? String.Empty;
-			if (path.StartsWith("/"))
-				path = path.Substring(1);
 
-			_url = $"http://127.0.0.1:{port}/{path}";
+			if (!path.StartsWith("/"))
+				path = $"/{path}";
+
+			_url = $"https://127.0.0.1:{port}";
 
 			_host = new WebHostBuilder()
 				.UseKestrel()
 				.UseUrls(_url)
-				.Configure(Configure)
+				.Configure(app => Configure(app, path))
 				.Build();
 			_host.Start();
 		}
@@ -101,7 +102,10 @@ namespace Deveel.Messaging {
 			});
 		}
 
-		void Configure(IApplicationBuilder app) {
+		void Configure(IApplicationBuilder app, string rootPath) {
+			if (!String.IsNullOrWhiteSpace(rootPath))
+				app.UsePathBase(rootPath);
+
 			app.Run(async ctx => {
 				if (ctx.Request.Method == "GET") {
 					await SetResultAsync(ctx.Request.QueryString.Value, ctx);

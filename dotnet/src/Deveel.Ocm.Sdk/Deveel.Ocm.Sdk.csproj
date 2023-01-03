@@ -20,8 +20,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Deveel.Ocm.Message.Client\Deveel.Ocm.Message.Client.csproj" />
     <ProjectReference Include="..\Deveel.Ocm.Sdk.Core\Deveel.Ocm.Sdk.Core.csproj" />
-    <ProjectReference Include="..\Deveel.Ocm.Terminal.Client\Deveel.Ocm.Terminal.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

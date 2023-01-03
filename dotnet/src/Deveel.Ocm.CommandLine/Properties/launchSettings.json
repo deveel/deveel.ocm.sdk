@@ -4,9 +4,9 @@
       "commandName": "WSL2",
       "distributionName": ""
     },
-    "new terminal": {
+    "login": {
       "commandName": "Project",
-      "commandLineArgs": "new terminal -t email -a info@deveel.com -p twilio"
+      "commandLineArgs": "login"
     }
   }
 }
