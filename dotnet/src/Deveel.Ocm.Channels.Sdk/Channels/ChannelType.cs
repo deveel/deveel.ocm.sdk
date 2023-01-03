@@ -29,7 +29,9 @@ namespace Deveel.Messaging.Channels {
 		/// <summary>
 		/// An instance of the WhatsApp channel
 		/// </summary>
-		WhatsApp = 5
+		WhatsApp = 5,
+
+		Push = 6
 
 		// TODO: support for more channels
 	}

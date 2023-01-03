@@ -2,7 +2,7 @@
 
 namespace Deveel.Messaging.Terminals {
 	[Flags]
-	public enum TerminalRoles {
+	public enum ServerTerminalRoles {
 		Sender = 1,
 		Receiver = 2,
 		Both = Sender | Receiver

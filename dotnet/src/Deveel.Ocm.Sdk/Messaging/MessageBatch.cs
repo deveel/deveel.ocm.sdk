@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections;
 
 namespace Deveel.Messaging {
-	public sealed class MessageBatch {
+	public sealed class MessageBatch : IEnumerable<Message> {
 		// TODO: make this number configurable...
 		private const int MaxSize = 100;
 		private readonly List<Message> messages = new List<Message>();
@@ -33,6 +34,16 @@ namespace Deveel.Messaging {
 			}
 
 			return this;
+		}
+
+		public IEnumerator<Message> GetEnumerator() => messages.GetEnumerator();
+
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		internal Models.MessageBatch AsClientBatch() {
+			return new Models.MessageBatch(messages.Select(x => x.AsClientMessage())) {
+				Context = Context?.ToDictionary(x => x.Key, y => y.Value)
+			};
 		}
 	}
 }

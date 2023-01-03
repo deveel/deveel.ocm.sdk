@@ -31,7 +31,7 @@ namespace Deveel.Messaging.Channels {
 
 		/// <inheritdoc/>
 		public override int GetHashCode() {
-			return HashCode.Combine(name.GetHashCode());
+			return name.GetHashCode();
 		}
 
 		/// <inheritdoc/>

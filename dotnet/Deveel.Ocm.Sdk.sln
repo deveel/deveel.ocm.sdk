@@ -31,13 +31,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.Message.Client",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.Security.Client", "src\Deveel.Ocm.Security.Client\Deveel.Ocm.Security.Client.csproj", "{F233CE4C-A5A8-42A7-9ED0-C5282EA4A6F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.Channels.Sdk", "src\Deveel.Ocm.Channels.Sdk\Deveel.Ocm.Channels.Sdk.csproj", "{525A34CD-C00E-4350-AFFF-3F9A4D0FBE73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.Channels.Sdk", "src\Deveel.Ocm.Channels.Sdk\Deveel.Ocm.Channels.Sdk.csproj", "{525A34CD-C00E-4350-AFFF-3F9A4D0FBE73}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sdks", "sdks", "{3477E29E-9162-4DCD-8EE6-8258C6506A5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.Terminals.Sdk", "src\Deveel.Ocm.Terminals.Sdk\Deveel.Ocm.Terminals.Sdk.csproj", "{63AE3026-107B-4C15-B100-FB6C262A6BB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.Terminals.Sdk", "src\Deveel.Ocm.Terminals.Sdk\Deveel.Ocm.Terminals.Sdk.csproj", "{63AE3026-107B-4C15-B100-FB6C262A6BB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.Sdk.XUnit", "test\Deveel.Ocm.Sdk.XUnit\Deveel.Ocm.Sdk.XUnit.csproj", "{4612982A-586A-42F3-ADE5-3D63E9F8251E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Deveel.Ocm.Sdk.XUnit", "test\Deveel.Ocm.Sdk.XUnit\Deveel.Ocm.Sdk.XUnit.csproj", "{4612982A-586A-42F3-ADE5-3D63E9F8251E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.Client.Testing", "src\Deveel.Ocm.Client.Testing\Deveel.Ocm.Client.Testing.csproj", "{8E9662A8-23EF-4F7D-BDFA-C6E7C8597287}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deveel.Ocm.Terminals.Sdk.XUnit", "test\Deveel.Ocm.Terminals.Sdk.XUnit\Deveel.Ocm.Terminals.Sdk.XUnit.csproj", "{C2D3C7F5-64CA-4E58-82A6-2E5AEE3982DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +109,14 @@ Global
 		{4612982A-586A-42F3-ADE5-3D63E9F8251E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4612982A-586A-42F3-ADE5-3D63E9F8251E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4612982A-586A-42F3-ADE5-3D63E9F8251E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E9662A8-23EF-4F7D-BDFA-C6E7C8597287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9662A8-23EF-4F7D-BDFA-C6E7C8597287}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E9662A8-23EF-4F7D-BDFA-C6E7C8597287}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E9662A8-23EF-4F7D-BDFA-C6E7C8597287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2D3C7F5-64CA-4E58-82A6-2E5AEE3982DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D3C7F5-64CA-4E58-82A6-2E5AEE3982DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D3C7F5-64CA-4E58-82A6-2E5AEE3982DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D3C7F5-64CA-4E58-82A6-2E5AEE3982DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +137,8 @@ Global
 		{525A34CD-C00E-4350-AFFF-3F9A4D0FBE73} = {3477E29E-9162-4DCD-8EE6-8258C6506A5E}
 		{63AE3026-107B-4C15-B100-FB6C262A6BB4} = {3477E29E-9162-4DCD-8EE6-8258C6506A5E}
 		{4612982A-586A-42F3-ADE5-3D63E9F8251E} = {3477E29E-9162-4DCD-8EE6-8258C6506A5E}
+		{8E9662A8-23EF-4F7D-BDFA-C6E7C8597287} = {3477E29E-9162-4DCD-8EE6-8258C6506A5E}
+		{C2D3C7F5-64CA-4E58-82A6-2E5AEE3982DB} = {3477E29E-9162-4DCD-8EE6-8258C6506A5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE0775D6-CD64-4AD6-B686-70DF29628758}

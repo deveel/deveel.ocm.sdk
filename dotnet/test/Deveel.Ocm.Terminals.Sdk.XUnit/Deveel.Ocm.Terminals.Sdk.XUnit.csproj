@@ -1,11 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>Deveel</RootNamespace>
-
+    <RootNamespace>Deveel.Messaging</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -25,7 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Deveel.Ocm.Client.Testing\Deveel.Ocm.Client.Testing.csproj" />
-    <ProjectReference Include="..\..\src\Deveel.Ocm.Sdk\Deveel.Ocm.Sdk.csproj" />
+    <ProjectReference Include="..\..\src\Deveel.Ocm.Terminals.Sdk\Deveel.Ocm.Terminals.Sdk.csproj" />
   </ItemGroup>
 
 </Project>

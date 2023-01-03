@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 
 namespace Deveel.Testing {
 	partial class HttpCallbackClientFactory : IHttpClientFactory, IDisposable {

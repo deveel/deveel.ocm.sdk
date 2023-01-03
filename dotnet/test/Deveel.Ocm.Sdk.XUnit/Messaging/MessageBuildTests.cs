@@ -16,7 +16,7 @@ namespace Deveel.Messaging {
 				.Build();
 
 			message.Should().NotBeNull();
-			message.ChannelName.Should().NotBeNullOrWhiteSpace().And.Be("test-channel-1");
+			message.ChannelName.Should().NotBeNull().And.Be(new ChannelName("test-channel-1"));
 
 			message.Sender.Should().NotBeNull();
 			message.Sender.HasValue.Should().BeTrue();
@@ -53,7 +53,7 @@ namespace Deveel.Messaging {
 				.Build();
 
 			message.Should().NotBeNull();
-			message.ChannelName.Should().NotBeNullOrWhiteSpace().And.Be("test-channel-1");
+			message.ChannelName.Should().NotBeNull().And.Be(new ChannelName("test-channel-1"));
 
 			message.Sender.Should().NotBeNull();
 			message.Sender.HasValue.Should().BeTrue();
@@ -73,7 +73,7 @@ namespace Deveel.Messaging {
 				.And.Subject.First().Should().BeEquivalentTo(new KeyValuePair<string, object>("campaign", "new-sales-2022"));
 
 			message.Fallback.Should().NotBeNull();
-			message.Fallback.ChannelName.Should().NotBeNullOrWhiteSpace().And.Be("sms-1");
+			message.Fallback.ChannelName.Should().NotBeNull().And.Be(new ChannelName("sms-1"));
 			message.Fallback.Sender.Should().NotBeNull();
 			message.Fallback.Sender.Value.Type.Should().Be(TerminalType.PhoneNumber);
 			message.Fallback.Sender.Value.EndPoint.Should().Be("+18002210001");

@@ -4,7 +4,7 @@ using Deveel.Messaging.Models;
 
 namespace Deveel.Messaging {
 	public abstract class MessageBase {
-		protected MessageBase(string channelName, MessageTerminal? sender, MessageTerminal receiver, MessageContentBase content) {
+		protected MessageBase(ChannelName channelName, MessageTerminal? sender, MessageTerminal receiver, MessageContentBase content) {
 			if (string.IsNullOrWhiteSpace(channelName))
 				throw new ArgumentException($"'{nameof(channelName)}' cannot be null or whitespace.", nameof(channelName));
 
@@ -19,7 +19,7 @@ namespace Deveel.Messaging {
 		/// Gets the name of the channel used to transport the message
 		/// from an application to the receiver.
 		/// </summary>
-		public string ChannelName { get; }
+		public ChannelName ChannelName { get; }
 
 		/// <summary>
 		/// Gets the terminal address of the sender.

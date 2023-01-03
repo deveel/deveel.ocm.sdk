@@ -18,11 +18,11 @@ namespace Deveel.Messaging {
 		/// <param name="content"></param>
 		/// <exception cref="ArgumentException"></exception>
 		/// <exception cref="ArgumentNullException"></exception>
-		public Message(string channelName, MessageTerminal sender, MessageTerminal receiver, MessageContentBase content)
+		public Message(ChannelName channelName, MessageTerminal sender, MessageTerminal receiver, MessageContentBase content)
 			: base(channelName, sender, receiver, content) {
 		}
 
-		public Message(string channelName, MessageTerminal receiver, MessageContentBase content)
+		public Message(ChannelName channelName, MessageTerminal receiver, MessageContentBase content)
 			: base(channelName, null, receiver, content) {
 		}
 

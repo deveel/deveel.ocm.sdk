@@ -2,11 +2,11 @@
 
 namespace Deveel.Messaging {
 	public sealed class FallbackMessage : MessageBase {
-		public FallbackMessage(string channelName, MessageTerminal sender, MessageTerminal receiver, MessageContentBase content) 
+		public FallbackMessage(ChannelName channelName, MessageTerminal sender, MessageTerminal receiver, MessageContentBase content) 
 			: base(channelName, sender, receiver, content) {
 		}
 
-		public FallbackMessage(string channelName, MessageTerminal receiver, MessageContentBase content)
+		public FallbackMessage(ChannelName channelName, MessageTerminal receiver, MessageContentBase content)
 			: base(channelName, null, receiver, content) {
 		}
 

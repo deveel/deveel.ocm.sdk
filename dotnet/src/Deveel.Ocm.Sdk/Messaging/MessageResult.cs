@@ -4,14 +4,28 @@ using Deveel.Messaging.Models;
 
 namespace Deveel.Messaging {
 	public sealed class MessageResult {
-		private readonly Models.MessageResult result;
+		private readonly string messageId;
+		private readonly IReadOnlyDictionary<string, object>? context;
+		private readonly MessageResult? fallback;
 
 		internal MessageResult(Models.MessageResult result) {
-			this.result = result;
+			this.messageId = result.MessageId;
+			this.context = result.Context;
+			fallback = result.Fallback != null ? new MessageResult(result.Fallback) : null;
+			IsRoot = true;
 		}
 
-		public string MessageId => result.MessageId;
+		private MessageResult(Models.FallbackMessageResult result) {
+			this.messageId = result.MessageId;
+			this.fallback = result.Fallback != null ? new MessageResult(result.Fallback) : null;
+		}
 
-		public IReadOnlyDictionary<string, object?>? Context => result.Context;
+		public string MessageId => messageId;
+
+		public MessageResult? Fallback => fallback;
+
+		public IReadOnlyDictionary<string, object>? Context => context;
+
+		public bool IsRoot { get; }
 	}
 }

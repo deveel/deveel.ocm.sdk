@@ -13,5 +13,8 @@ namespace Deveel.Messaging {
 
 			return client.SendMessageAsync(builder.Build(), cancellationToken);
 		}
+
+		public static Task<MessageBatchResult> SendBatchAsync(this IOcmClient client, MessageBatch batch, CancellationToken cancellationToken = default)
+			=> client.ExecuteAsync<SendBatchCommand, MessageBatchResult>(new SendBatchCommand(batch), cancellationToken);
 	}
 }

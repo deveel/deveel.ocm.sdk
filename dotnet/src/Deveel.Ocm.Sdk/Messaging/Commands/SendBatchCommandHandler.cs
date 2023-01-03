@@ -10,6 +10,10 @@ namespace Deveel.Messaging.Commands {
 			this.client = client;
 		}
 
-		public Task<MessageBatchResult> Handle(SendBatchCommand request, CancellationToken cancellationToken) => throw new NotImplementedException();
+		public async Task<MessageBatchResult> Handle(SendBatchCommand request, CancellationToken cancellationToken) {
+			var result = await client.BatchSendAsync(request.Batch.AsClientBatch(), cancellationToken);
+
+			return new MessageBatchResult(result);
+		}
 	}
 }
