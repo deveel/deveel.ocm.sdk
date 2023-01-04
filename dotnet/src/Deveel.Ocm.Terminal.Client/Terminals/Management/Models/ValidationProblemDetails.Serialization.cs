@@ -15,36 +15,16 @@ namespace Deveel.Messaging.Terminals.Management.Models
     {
         internal static ValidationProblemDetails DeserializeValidationProblemDetails(JsonElement element)
         {
-            Optional<IReadOnlyDictionary<string, IList<string>>> errors = default;
             Optional<string> type = default;
             Optional<string> title = default;
             Optional<int?> status = default;
             Optional<string> detail = default;
             Optional<string> instance = default;
+            Optional<IReadOnlyDictionary<string, IList<string>>> errors = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        errors = null;
-                        continue;
-                    }
-                    Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        List<string> array = new List<string>();
-                        foreach (var item in property0.Value.EnumerateArray())
-                        {
-                            array.Add(item.GetString());
-                        }
-                        dictionary.Add(property0.Name, array);
-                    }
-                    errors = dictionary;
-                    continue;
-                }
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -95,10 +75,30 @@ namespace Deveel.Messaging.Terminals.Management.Models
                     instance = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("errors"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        errors = null;
+                        continue;
+                    }
+                    Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        List<string> array = new List<string>();
+                        foreach (var item in property0.Value.EnumerateArray())
+                        {
+                            array.Add(item.GetString());
+                        }
+                        dictionary.Add(property0.Name, array);
+                    }
+                    errors = dictionary;
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ValidationProblemDetails(Optional.ToDictionary(errors), type.Value, title.Value, Optional.ToNullable(status), detail.Value, instance.Value, additionalProperties);
+            return new ValidationProblemDetails(type.Value, title.Value, Optional.ToNullable(status), detail.Value, instance.Value, Optional.ToDictionary(errors), additionalProperties);
         }
     }
 }

@@ -2,9 +2,6 @@
 using System.Collections.Immutable;
 using System.Net.Security;
 
-using MediatR;
-using MediatR.Registration;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -42,7 +39,7 @@ namespace Deveel.Messaging {
 			services.Add(new ServiceDescriptor(typeof(TFactory), typeof(TFactory), lifetime));
 
 			var serviceFactory = (IServiceProvider provider) => {
-				var clientFactory = provider.GetService<TFactory>();
+				var clientFactory = provider.GetRequiredService<TFactory>();
 				var settings = provider.GetClientSettings<TClient>();
 
 				return clientFactory.CreateClient(new ServiceClientContext<TClient>(provider, settings));

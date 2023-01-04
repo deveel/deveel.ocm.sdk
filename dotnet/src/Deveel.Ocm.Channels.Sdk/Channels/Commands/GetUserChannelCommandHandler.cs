@@ -1,18 +1,15 @@
-﻿using System;
-
-using Deveel.Messaging.Channels.Management;
-
-using MediatR;
+﻿using Deveel.Messaging.Channels.Management;
+using Deveel.Messaging.Commands;
 
 namespace Deveel.Messaging.Channels.Commands {
-	class GetUserChannelCommandHandler : IRequestHandler<GetUserChannelCommand, UserChannel?> {
+	class GetUserChannelCommandHandler : IClientCommandHandler<GetUserChannelCommand, UserChannel?> {
 		private readonly ChannelClient client;
 
 		public GetUserChannelCommandHandler(ChannelClient client) {
 			this.client = client;
 		}
 
-		public async Task<UserChannel?> Handle(GetUserChannelCommand request, CancellationToken cancellationToken) {
+		public async Task<UserChannel?> HandleAsync(GetUserChannelCommand request, CancellationToken cancellationToken) {
 			Deveel.Messaging.Channels.Management.Models.UserChannel? result = null;
 
 			if (request.ChannelName != null) {

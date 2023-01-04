@@ -33,7 +33,7 @@ namespace Deveel.Messaging {
 
 			if (authentication is ClientCredentialsAuthentication clientCredentials) {
 				var clientFactory = services.GetRequiredService<IHttpClientFactory>();
-				credential = new OcmClientCredentials(clientFactory, clientCredentials.ClientId, clientCredentials.ClientSecret, clientCredentials.Scopes);
+				credential = new OcmClientCredentials(clientFactory, clientCredentials.ClientId, clientCredentials.ClientSecret, clientCredentials.Scopes ?? new List<string>());
 				return true;
 			} else if (authentication is SessionAccessTokenAuthentication) {
 				var reader = services.GetRequiredService<IAccessTokenReader>();

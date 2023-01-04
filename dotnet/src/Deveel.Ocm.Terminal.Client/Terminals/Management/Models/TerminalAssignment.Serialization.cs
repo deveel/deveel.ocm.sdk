@@ -15,21 +15,11 @@ namespace Deveel.Messaging.Terminals.Management.Models
     {
         internal static TerminalAssignment DeserializeTerminalAssignment(JsonElement element)
         {
-            Optional<string> terminalId = default;
             string tenantId = default;
             DateTimeOffset timeStamp = default;
+            Optional<string> terminalId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("terminalId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        terminalId = null;
-                        continue;
-                    }
-                    terminalId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("tenantId"))
                 {
                     tenantId = property.Value.GetString();
@@ -40,8 +30,18 @@ namespace Deveel.Messaging.Terminals.Management.Models
                     timeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("terminalId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        terminalId = null;
+                        continue;
+                    }
+                    terminalId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new TerminalAssignment(terminalId.Value, tenantId, timeStamp);
+            return new TerminalAssignment(tenantId, timeStamp, terminalId.Value);
         }
     }
 }

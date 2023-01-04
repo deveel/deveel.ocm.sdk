@@ -1,8 +1,5 @@
 ﻿using System;
 
-using MediatR.Registration;
-using MediatR;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Net.Sockets;
@@ -16,16 +13,13 @@ namespace Deveel.Messaging {
 			this.services = services;
 			this.lifetime = lifetime;
 
-			RegisterMediator();
 			RegisterClient();
 		}
 
-		private void RegisterMediator() {
-			ServiceRegistrar.AddRequiredServices(services, new MediatRServiceConfiguration());
-		}
+		public static OcmClientBuilder Default => new OcmClientBuilder(new ServiceCollection(), ServiceLifetime.Transient);
 
 		private void RegisterClient() {
-			services.Add(new ServiceDescriptor(typeof(IOcmClient), typeof(DefaultOcmClient), lifetime));
+			services.Add(new ServiceDescriptor(typeof(IOcmClient), typeof(OcmClient), lifetime));
 		}
 
 		public OcmClientBuilder WithLifetime(ServiceLifetime lifetime) {
@@ -59,6 +53,12 @@ namespace Deveel.Messaging {
 			configure(services);
 
 			return this;
+		}
+
+		public IOcmClient Build() {
+			var provider = services.BuildServiceProvider();
+
+			return provider.GetRequiredService<IOcmClient>();
 		}
 	}
 }

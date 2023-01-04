@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Azure;
+
 using Deveel.Messaging.Terminals.Management.Models;
 
 namespace Deveel.Messaging.Terminals {
@@ -25,36 +27,21 @@ namespace Deveel.Messaging.Terminals {
 
 		public ServerTerminalRoles? Roles { get; set; }
 
-		// TODO: public IDictionary<string, object?>? Context { get; set; }
+		public IDictionary<string, object>? Context { get; set; }
 
-		private static Management.Models.ServerTerminalType AsClientServerTerminalType(TerminalType type) {
-			return type switch {
-				TerminalType.EmailAddress => ServerTerminalType.Email,
-				TerminalType.AlphaNumeric => ServerTerminalType.AlphaNumeric,
-				TerminalType.PhoneNumber => ServerTerminalType.PhoneNumber,
-				_ => throw new MessagingClientException("Invalid server terminal type")
+		public bool Active { get; private set; }
+
+		internal static ServerTerminal FromClient(Management.Models.ServerTerminal result)
+			=> new ServerTerminal(result.Type.AsTerminalType(), result.Address, result.Provider) {
+				Id = result.Id,
+				Roles = result.Role.AsTerminalRoles(),
+				Active = result.Status == Management.Models.TerminalStatus.Active,
+				Context = result.Context?.ToDictionary(x => x.Key, y => y.Value)
 			};
-		}
-
-		private static Management.Models.TerminalRoles AsClientTerminalRoles(ServerTerminalRoles? roles) {
-			if (roles == null)
-				return Management.Models.TerminalRoles.Default;
-
-			if (roles.Value.HasFlag(ServerTerminalRoles.Sender) &&
-				roles.Value.HasFlag(ServerTerminalRoles.Receiver)) {
-				return Management.Models.TerminalRoles.Both;
-			} else if (roles.Value.HasFlag(ServerTerminalRoles.Receiver)) {
-				return Management.Models.TerminalRoles.Receiver;
-			} else if (roles.Value.HasFlag(ServerTerminalRoles.Sender)) {
-				return Management.Models.TerminalRoles.Sender;
-			} else {
-				throw new MessagingClientException("Invalid terminal roles");
-			}
-		}
 
 		internal Management.Models.NewServerTerminal AsNewServerTerminal() {
-			// TODO: set the context to append on ever message sent/received through the terminal... 
-			return new NewServerTerminal(Provider, AsClientTerminalRoles(Roles), AsClientServerTerminalType(Type), Address) {
+			return new NewServerTerminal(Provider, Roles.AsClientTerminalRoles(), Type.AsClientServerTerminalType(), Address) {
+				Context = Context
 			};
 		}
 	}

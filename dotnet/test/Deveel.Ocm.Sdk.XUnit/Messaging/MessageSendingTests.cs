@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 
 using Deveel.Testing;
@@ -8,29 +10,29 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Deveel.Messaging {
-	public static class MessageSendingTests {
-		[Fact]
-		public static async Task SendMessage() {
+	public class MessageSendingTests {
+		private readonly OcmClientBuilder clientBuilder;
+
+		public MessageSendingTests() {
 			var accessToken = Guid.NewGuid().ToString();
 
-			var services = new ServiceCollection()
-				.AddOcmClient(builder => builder
-					.WithLifetime(ServiceLifetime.Transient)
-					.UseSettings(settings => settings.UseAccessToken(accessToken, DateTimeOffset.UtcNow.AddMinutes(20)))
-					.AddMessaging(messaging => messaging
-						.UseSettings(settings => settings
-							.UseHttpClient(HttpCallbackHandler.Create(request => {
-								var result = JsonSerializer.SerializeToDocument(new { 
-									messageId = Guid.NewGuid().ToString("N") 
-								});
-								var response = new HttpResponseMessage(System.Net.HttpStatusCode.Accepted);
+			clientBuilder = OcmClientBuilder.Default
+				.UseSettings(settings => settings.UseAccessToken(accessToken, DateTimeOffset.UtcNow.AddMinutes(20)));
+		}
 
-								response.Content = new StringContent(JsonSerializer.Serialize(result), Encoding.UTF8, "application/json");
-								return response;
-							})))))
-				.BuildServiceProvider();
-
-			var client = services.GetRequiredService<IOcmClient>();
+		[Fact]
+		public async Task SendMessage() {
+			var client = clientBuilder
+				.AddMessaging(messaging => messaging
+					.UseSettings(settings => settings
+						.UseHttpClient(HttpCallbackHandler.Create(request => {
+							return new HttpResponseMessage(HttpStatusCode.Accepted) {
+								Content = JsonContent.Create(new {
+									messageId = Guid.NewGuid().ToString("N")
+								})
+							};
+						}))))
+				.Build();
 
 			var sender = MessageTerminal.Email("info@deveel.com");
 			var receiver = MessageTerminal.Email("test@example.com");
@@ -43,30 +45,22 @@ namespace Deveel.Messaging {
 		}
 
 		[Fact]
-		public static async Task SendMessageWithFallback() {
-			var accessToken = Guid.NewGuid().ToString();
-
-			var services = new ServiceCollection()
-				.AddOcmClient(builder => builder
-					.WithLifetime(ServiceLifetime.Transient)
-					.UseSettings(settings => settings.UseAccessToken(accessToken, DateTimeOffset.UtcNow.AddMinutes(20)))
-					.AddMessaging(messaging => messaging
-						.UseSettings(settings => settings
-							.UseHttpClient(HttpCallbackHandler.Create(request => {
-								var result = JsonSerializer.SerializeToDocument(new { 
+		public async Task SendMessageWithFallback() {
+			var client = clientBuilder
+				.AddMessaging(messaging => messaging
+					.UseSettings(settings => settings
+						.UseHttpClient(HttpCallbackHandler.Create(request => {
+							return new HttpResponseMessage(HttpStatusCode.Accepted) {
+								Content = JsonContent.Create(new {
 									messageId = Guid.NewGuid().ToString("N"),
 									fallback = new {
 										messageId = Guid.NewGuid().ToString("N")
 									}
-								});
-								var response = new HttpResponseMessage(System.Net.HttpStatusCode.Accepted);
+								})
+							};
+						}))))
+				.Build();
 
-								response.Content = new StringContent(JsonSerializer.Serialize(result), Encoding.UTF8, "application/json");
-								return response;
-							})))))
-				.BuildServiceProvider();
-
-			var client = services.GetRequiredService<IOcmClient>();
 
 			var sender = MessageTerminal.Email("info@deveel.com");
 			var receiver = MessageTerminal.Email("test@example.com");
@@ -86,30 +80,21 @@ namespace Deveel.Messaging {
 		}
 
 		[Fact]
-		public static async Task SendMessageBatch() {
-			var accessToken = Guid.NewGuid().ToString();
-
-			var services = new ServiceCollection()
-				.AddOcmClient(builder => builder
-					.WithLifetime(ServiceLifetime.Transient)
-					.UseSettings(settings => settings.UseAccessToken(accessToken, DateTimeOffset.UtcNow.AddMinutes(20)))
-					.AddMessaging(messaging => messaging
-						.UseSettings(settings => settings
-							.UseHttpClient(HttpCallbackHandler.Create(request => {
-								var result = JsonSerializer.SerializeToDocument(new {
-									batchId = Guid.NewGuid().ToString("N"),
-									messages = new[] {
-										new { messageId = Guid.NewGuid().ToString("N")}
-									}
-								});
-								var response = new HttpResponseMessage(System.Net.HttpStatusCode.Accepted);
-
-								response.Content = new StringContent(JsonSerializer.Serialize(result), Encoding.UTF8, "application/json");
-								return response;
-							})))))
-				.BuildServiceProvider();
-
-			var client = services.GetRequiredService<IOcmClient>();
+		public async Task SendMessageBatch() {
+			var client = clientBuilder
+				.AddMessaging(messaging => messaging
+				.UseSettings(settings => settings
+					.UseHttpClient(HttpCallbackHandler.Create(request => {
+						return new HttpResponseMessage(System.Net.HttpStatusCode.Accepted) {
+							Content = JsonContent.Create(new {
+								batchId = Guid.NewGuid().ToString("N"),
+								messages = new[] {
+									new { messageId = Guid.NewGuid().ToString("N")}
+								}
+							})
+						};
+					}))))
+				.Build();
 
 			var sender = MessageTerminal.Email("info@deveel.com");
 			var receiver = MessageTerminal.Email("test@example.com");

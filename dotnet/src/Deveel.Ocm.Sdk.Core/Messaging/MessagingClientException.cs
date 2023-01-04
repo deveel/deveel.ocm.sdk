@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 
 namespace Deveel.Messaging {
-	public class MessagingClientException : Exception {
+	public class MessagingClientException : OcmClientException {
 		public MessagingClientException() {
 		}
 

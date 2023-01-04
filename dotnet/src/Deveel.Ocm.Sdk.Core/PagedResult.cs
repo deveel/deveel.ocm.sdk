@@ -17,5 +17,8 @@ namespace Deveel {
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 		// TODO: next page
+
+		public static PagedResult<TItem> Create(int totalItems, IEnumerable<TItem>? items)
+			=> new PagedResult<TItem>(totalItems, items?.ToList().AsReadOnly() ?? new List<TItem>().AsReadOnly());
 	}
 }

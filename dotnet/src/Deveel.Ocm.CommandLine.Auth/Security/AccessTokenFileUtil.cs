@@ -73,7 +73,7 @@ namespace Deveel.Messaging {
 			return new AccessToken(accessTokenValue, tokenExpiration);
 		}
 
-		public static async Task SaveTokenAsync(string accessToken, DateTimeOffset expiresOn) {
+		public static Task SaveTokenAsync(string accessToken, DateTimeOffset expiresOn) {
 			var filePath = GetFilePath();
 
 			FileStream? fileStream = null;
@@ -92,6 +92,7 @@ namespace Deveel.Messaging {
 				fileStream?.Dispose();
 			}
 
+			return Task.CompletedTask;
 		}
 	}
 }

@@ -33,6 +33,24 @@ namespace Deveel.Messaging.Terminals.Management.Models
                     writer.WriteNull("settings");
                 }
             }
+            if (Optional.IsCollectionDefined(Context))
+            {
+                if (Context != null)
+                {
+                    writer.WritePropertyName("context");
+                    writer.WriteStartObject();
+                    foreach (var item in Context)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("context");
+                }
+            }
             writer.WritePropertyName("provider");
             writer.WriteStringValue(Provider);
             writer.WritePropertyName("role");

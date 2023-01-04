@@ -6,7 +6,7 @@ namespace Deveel.Messaging.Terminals {
 		private TerminalType? terminalType;
 		private string? terminalAddress;
 		private string? provider;
-		// TODO: private IDictionary<string, object?>? context;
+		private IDictionary<string, object>? context;
 
 		public ServerTerminalBuilder OfType(TerminalType type) {
 			this.terminalType = type;
@@ -37,24 +37,27 @@ namespace Deveel.Messaging.Terminals {
 			return this;
 		}
 
-		// TODO:
-		//public ServerTerminalBuilder WithContext(IDictionary<string, object?> context) {
-		//	this.context = context ?? throw new ArgumentNullException(nameof(context));
+		public ServerTerminalBuilder WithContext(IDictionary<string, object> context) {
+			this.context = context ?? throw new ArgumentNullException(nameof(context));
 
-		//	return this;
-		//}
+			return this;
+		}
 
-		//public ServerTerminalBuilder WithContext(string key, object? value) {
-		//	if (string.IsNullOrWhiteSpace(key)) 
-		//		throw new ArgumentException($"'{nameof(key)}' cannot be null or whitespace.", nameof(key));
+		public ServerTerminalBuilder WithContext(string key, object? value) {
+			if (string.IsNullOrWhiteSpace(key))
+				throw new ArgumentException($"'{nameof(key)}' cannot be null or whitespace.", nameof(key));
 
-		//	if (context == null)
-		//		context = new Dictionary<string, object?>();
+			if (context == null)
+				context = new Dictionary<string, object>();
 
-		//	context[key] = value;
+			if (value == null) {
+				context.Remove(key);
+			} else {
+				context[key] = value;
+			}
 
-		//	return this;
-		//}
+			return this;
+		}
 
 		public ServerTerminalBuilder WithRoles(ServerTerminalRoles roles) {
 			if (terminalRoles == null) {
@@ -82,7 +85,7 @@ namespace Deveel.Messaging.Terminals {
 
 			return new ServerTerminal(terminalType.Value, terminalAddress, provider) {
 				Roles = terminalRoles,
-				// TODO: Context = context?.ToDictionary(x => x.Key, x => x.Value)
+				Context = context?.ToDictionary(x => x.Key, x => x.Value)
 			};
 		}
 	}

@@ -33,6 +33,7 @@ namespace Deveel.Messaging.Terminals.Management.Models
             Source = source;
             Role = role;
             Settings = new ChangeTrackingDictionary<string, object>();
+            Context = new ChangeTrackingDictionary<string, object>();
             Provider = provider;
         }
 
@@ -45,9 +46,10 @@ namespace Deveel.Messaging.Terminals.Management.Models
         /// <param name="role"></param>
         /// <param name="sourceId"></param>
         /// <param name="settings"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="context"> Dictionary of &lt;any&gt;. </param>
         /// <param name="provider"></param>
         /// <param name="id"></param>
-        internal ServerTerminal(ServerTerminalType type, string address, TerminalStatus status, DateTimeOffset? lastChanged, TerminalSource source, TerminalRoles role, string sourceId, IReadOnlyDictionary<string, object> settings, string provider, string id)
+        internal ServerTerminal(ServerTerminalType type, string address, TerminalStatus status, DateTimeOffset? lastChanged, TerminalSource source, TerminalRoles role, string sourceId, IReadOnlyDictionary<string, object> settings, IReadOnlyDictionary<string, object> context, string provider, string id)
         {
             Type = type;
             Address = address;
@@ -57,6 +59,7 @@ namespace Deveel.Messaging.Terminals.Management.Models
             Role = role;
             SourceId = sourceId;
             Settings = settings;
+            Context = context;
             Provider = provider;
             Id = id;
         }
@@ -77,6 +80,8 @@ namespace Deveel.Messaging.Terminals.Management.Models
         public string SourceId { get; }
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IReadOnlyDictionary<string, object> Settings { get; }
+        /// <summary> Dictionary of &lt;any&gt;. </summary>
+        public IReadOnlyDictionary<string, object> Context { get; }
         /// <summary> Gets the provider. </summary>
         public string Provider { get; }
         /// <summary> Gets the id. </summary>

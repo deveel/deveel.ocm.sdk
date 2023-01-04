@@ -1,17 +1,20 @@
 ﻿using System;
 
+using Deveel.Messaging.Commands;
 using Deveel.Messaging.Terminals.Management;
 
-using MediatR;
-
 namespace Deveel.Messaging.Terminals.Commands {
-	class CreateTerminalCommandHandler : IRequestHandler<CreateTerminalCommand, ServerTerminal> {
+	class CreateTerminalCommandHandler : IClientCommandHandler<CreateTerminalCommand, ServerTerminal> {
 		private readonly TerminalClient client;
 
 		public CreateTerminalCommandHandler(TerminalClient client) {
 			this.client = client;
 		}
 
-		public Task<ServerTerminal> Handle(CreateTerminalCommand request, CancellationToken cancellationToken) => throw new NotImplementedException();
+		public async Task<ServerTerminal> HandleAsync(CreateTerminalCommand request, CancellationToken cancellationToken) {
+			var result = await client.CreateTerminalAsync(request.Terminal.AsNewServerTerminal(), cancellationToken);
+
+			return ServerTerminal.FromClient(result);
+		}
 	}
 }

@@ -26,21 +26,21 @@ namespace Deveel.Messaging.Terminals.Management.Models
         }
 
         /// <summary> Initializes a new instance of TerminalAssignment. </summary>
-        /// <param name="terminalId"></param>
         /// <param name="tenantId"></param>
         /// <param name="timeStamp"></param>
-        internal TerminalAssignment(string terminalId, string tenantId, DateTimeOffset timeStamp)
+        /// <param name="terminalId"></param>
+        internal TerminalAssignment(string tenantId, DateTimeOffset timeStamp, string terminalId)
         {
-            TerminalId = terminalId;
             TenantId = tenantId;
             TimeStamp = timeStamp;
+            TerminalId = terminalId;
         }
 
-        /// <summary> Gets the terminal id. </summary>
-        public string TerminalId { get; }
         /// <summary> Gets the tenant id. </summary>
         public string TenantId { get; }
         /// <summary> Gets the time stamp. </summary>
         public DateTimeOffset TimeStamp { get; }
+        /// <summary> Gets the terminal id. </summary>
+        public string TerminalId { get; }
     }
 }

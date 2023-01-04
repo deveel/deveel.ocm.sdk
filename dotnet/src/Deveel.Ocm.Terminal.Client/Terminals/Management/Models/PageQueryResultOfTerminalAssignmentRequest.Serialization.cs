@@ -16,17 +16,42 @@ namespace Deveel.Messaging.Terminals.Management.Models
     {
         internal static PageQueryResultOfTerminalAssignmentRequest DeserializePageQueryResultOfTerminalAssignmentRequest(JsonElement element)
         {
+            int totalItems = default;
+            Optional<IReadOnlyList<TerminalAssignmentRequest>> items = default;
+            int totalPages = default;
             PageQuery query = default;
             Optional<Uri> self = default;
             Optional<Uri> first = default;
             Optional<Uri> next = default;
             Optional<Uri> previous = default;
             Optional<Uri> last = default;
-            int totalItems = default;
-            Optional<IReadOnlyList<TerminalAssignmentRequest>> items = default;
-            int totalPages = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("totalItems"))
+                {
+                    totalItems = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("items"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        items = null;
+                        continue;
+                    }
+                    List<TerminalAssignmentRequest> array = new List<TerminalAssignmentRequest>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TerminalAssignmentRequest.DeserializeTerminalAssignmentRequest(item));
+                    }
+                    items = array;
+                    continue;
+                }
+                if (property.NameEquals("totalPages"))
+                {
+                    totalPages = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("query"))
                 {
                     query = PageQuery.DeserializePageQuery(property.Value);
@@ -82,33 +107,8 @@ namespace Deveel.Messaging.Terminals.Management.Models
                     last = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("totalItems"))
-                {
-                    totalItems = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("items"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        items = null;
-                        continue;
-                    }
-                    List<TerminalAssignmentRequest> array = new List<TerminalAssignmentRequest>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(TerminalAssignmentRequest.DeserializeTerminalAssignmentRequest(item));
-                    }
-                    items = array;
-                    continue;
-                }
-                if (property.NameEquals("totalPages"))
-                {
-                    totalPages = property.Value.GetInt32();
-                    continue;
-                }
             }
-            return new PageQueryResultOfTerminalAssignmentRequest(query, self.Value, first.Value, next.Value, previous.Value, last.Value, totalItems, Optional.ToList(items), totalPages);
+            return new PageQueryResultOfTerminalAssignmentRequest(totalItems, Optional.ToList(items), totalPages, query, self.Value, first.Value, next.Value, previous.Value, last.Value);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Deveel.Messaging.Terminals.Management.Models
             Argument.AssertNotNull(address, nameof(address));
 
             Settings = new ChangeTrackingDictionary<string, object>();
+            Context = new ChangeTrackingDictionary<string, object>();
             Provider = provider;
             Role = role;
             Type = type;
@@ -34,6 +35,8 @@ namespace Deveel.Messaging.Terminals.Management.Models
 
         /// <summary> Dictionary of &lt;any&gt;. </summary>
         public IDictionary<string, object> Settings { get; set; }
+        /// <summary> Dictionary of &lt;any&gt;. </summary>
+        public IDictionary<string, object> Context { get; set; }
         /// <summary> Gets the provider. </summary>
         public string Provider { get; }
         /// <summary> Gets the role. </summary>

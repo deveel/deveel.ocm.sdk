@@ -24,6 +24,7 @@ namespace Deveel.Messaging.Terminals.Management.Models
             TerminalRoles role = default;
             Optional<string> sourceId = default;
             Optional<IReadOnlyDictionary<string, object>> settings = default;
+            Optional<IReadOnlyDictionary<string, object>> context = default;
             string provider = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
@@ -88,6 +89,21 @@ namespace Deveel.Messaging.Terminals.Management.Models
                     settings = dictionary;
                     continue;
                 }
+                if (property.NameEquals("context"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        context = null;
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    context = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("provider"))
                 {
                     provider = property.Value.GetString();
@@ -104,7 +120,7 @@ namespace Deveel.Messaging.Terminals.Management.Models
                     continue;
                 }
             }
-            return new ServerTerminal(type, address, status, Optional.ToNullable(lastChanged), source, role, sourceId.Value, Optional.ToDictionary(settings), provider, id.Value);
+            return new ServerTerminal(type, address, status, Optional.ToNullable(lastChanged), source, role, sourceId.Value, Optional.ToDictionary(settings), Optional.ToDictionary(context), provider, id.Value);
         }
     }
 }

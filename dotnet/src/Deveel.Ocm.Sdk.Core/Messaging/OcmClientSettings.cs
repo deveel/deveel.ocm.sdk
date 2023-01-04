@@ -3,6 +3,8 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+using Microsoft.Extensions.DependencyInjection;
+
 namespace Deveel.Messaging {
 	public sealed class OcmClientSettings {
 		public Uri? BaseUrl { get; set; }
@@ -12,6 +14,8 @@ namespace Deveel.Messaging {
 		public RetryPolicy? Retry { get; set; }
 
 		public HttpPipelineTransport? Transport { get; set; }
+
+		public IServiceCollection? Services { get; set; } = new ServiceCollection();
 
 		public void AddOAuthScopes(IList<string> scopes) {
 			// TODO: instead of throwing an exception, should we set a default flow?

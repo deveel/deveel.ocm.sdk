@@ -23,32 +23,34 @@ namespace Deveel.Messaging.Terminals.Management.Models
         /// <param name="role"></param>
         /// <param name="sourceId"></param>
         /// <param name="settings"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="context"> Dictionary of &lt;any&gt;. </param>
         /// <param name="provider"></param>
         /// <param name="id"></param>
         /// <returns> A new <see cref="Models.ServerTerminal"/> instance for mocking. </returns>
-        public static ServerTerminal ServerTerminal(ServerTerminalType type = default, string address = null, TerminalStatus status = default, DateTimeOffset? lastChanged = null, TerminalSource source = default, TerminalRoles role = default, string sourceId = null, IReadOnlyDictionary<string, object> settings = null, string provider = null, string id = null)
+        public static ServerTerminal ServerTerminal(ServerTerminalType type = default, string address = null, TerminalStatus status = default, DateTimeOffset? lastChanged = null, TerminalSource source = default, TerminalRoles role = default, string sourceId = null, IReadOnlyDictionary<string, object> settings = null, IReadOnlyDictionary<string, object> context = null, string provider = null, string id = null)
         {
             settings ??= new Dictionary<string, object>();
+            context ??= new Dictionary<string, object>();
 
-            return new ServerTerminal(type, address, status, lastChanged, source, role, sourceId, settings, provider, id);
+            return new ServerTerminal(type, address, status, lastChanged, source, role, sourceId, settings, context, provider, id);
         }
 
         /// <summary> Initializes a new instance of PageQueryResultOfServerTerminal. </summary>
+        /// <param name="totalItems"></param>
+        /// <param name="items"></param>
+        /// <param name="totalPages"></param>
         /// <param name="query"></param>
         /// <param name="self"></param>
         /// <param name="first"></param>
         /// <param name="next"></param>
         /// <param name="previous"></param>
         /// <param name="last"></param>
-        /// <param name="totalItems"></param>
-        /// <param name="items"></param>
-        /// <param name="totalPages"></param>
         /// <returns> A new <see cref="Models.PageQueryResultOfServerTerminal"/> instance for mocking. </returns>
-        public static PageQueryResultOfServerTerminal PageQueryResultOfServerTerminal(PageQuery query = null, Uri self = null, Uri first = null, Uri next = null, Uri previous = null, Uri last = null, int totalItems = default, IEnumerable<ServerTerminal> items = null, int totalPages = default)
+        public static PageQueryResultOfServerTerminal PageQueryResultOfServerTerminal(int totalItems = default, IEnumerable<ServerTerminal> items = null, int totalPages = default, PageQuery query = null, Uri self = null, Uri first = null, Uri next = null, Uri previous = null, Uri last = null)
         {
             items ??= new List<ServerTerminal>();
 
-            return new PageQueryResultOfServerTerminal(query, self, first, next, previous, last, totalItems, items?.ToList(), totalPages);
+            return new PageQueryResultOfServerTerminal(totalItems, items?.ToList(), totalPages, query, self, first, next, previous, last);
         }
 
         /// <summary> Initializes a new instance of PageQuery. </summary>
@@ -98,13 +100,13 @@ namespace Deveel.Messaging.Terminals.Management.Models
         }
 
         /// <summary> Initializes a new instance of TerminalAssignment. </summary>
-        /// <param name="terminalId"></param>
         /// <param name="tenantId"></param>
         /// <param name="timeStamp"></param>
+        /// <param name="terminalId"></param>
         /// <returns> A new <see cref="Models.TerminalAssignment"/> instance for mocking. </returns>
-        public static TerminalAssignment TerminalAssignment(string terminalId = null, string tenantId = null, DateTimeOffset timeStamp = default)
+        public static TerminalAssignment TerminalAssignment(string tenantId = null, DateTimeOffset timeStamp = default, string terminalId = null)
         {
-            return new TerminalAssignment(terminalId, tenantId, timeStamp);
+            return new TerminalAssignment(tenantId, timeStamp, terminalId);
         }
 
         /// <summary> Initializes a new instance of TerminalProvider. </summary>
@@ -120,21 +122,21 @@ namespace Deveel.Messaging.Terminals.Management.Models
         }
 
         /// <summary> Initializes a new instance of PageQueryResultOfTerminalAssignmentRequest. </summary>
+        /// <param name="totalItems"></param>
+        /// <param name="items"></param>
+        /// <param name="totalPages"></param>
         /// <param name="query"></param>
         /// <param name="self"></param>
         /// <param name="first"></param>
         /// <param name="next"></param>
         /// <param name="previous"></param>
         /// <param name="last"></param>
-        /// <param name="totalItems"></param>
-        /// <param name="items"></param>
-        /// <param name="totalPages"></param>
         /// <returns> A new <see cref="Models.PageQueryResultOfTerminalAssignmentRequest"/> instance for mocking. </returns>
-        public static PageQueryResultOfTerminalAssignmentRequest PageQueryResultOfTerminalAssignmentRequest(PageQuery query = null, Uri self = null, Uri first = null, Uri next = null, Uri previous = null, Uri last = null, int totalItems = default, IEnumerable<TerminalAssignmentRequest> items = null, int totalPages = default)
+        public static PageQueryResultOfTerminalAssignmentRequest PageQueryResultOfTerminalAssignmentRequest(int totalItems = default, IEnumerable<TerminalAssignmentRequest> items = null, int totalPages = default, PageQuery query = null, Uri self = null, Uri first = null, Uri next = null, Uri previous = null, Uri last = null)
         {
             items ??= new List<TerminalAssignmentRequest>();
 
-            return new PageQueryResultOfTerminalAssignmentRequest(query, self, first, next, previous, last, totalItems, items?.ToList(), totalPages);
+            return new PageQueryResultOfTerminalAssignmentRequest(totalItems, items?.ToList(), totalPages, query, self, first, next, previous, last);
         }
     }
 }

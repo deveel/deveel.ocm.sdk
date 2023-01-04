@@ -5,6 +5,7 @@ using System.Reflection;
 using Azure;
 using Azure.Core;
 
+using Deveel.Messaging.Commands;
 using Deveel.Security;
 
 using IdentityModel;
@@ -128,7 +129,7 @@ namespace Deveel.Messaging {
 
 
 		public static IServiceCollection AddOcmClient(this IServiceCollection services, Action<OcmClientBuilder> configure) {
-			var builder = new OcmClientBuilder(services, ServiceLifetime.Singleton);
+			var builder = new OcmClientBuilder(services, ServiceLifetime.Transient);
 			configure(builder);
 
 			return services;
@@ -139,6 +140,24 @@ namespace Deveel.Messaging {
 
 			services.Add(new ServiceDescriptor(typeof(IOcmClient), typeof(TClient), lifetime));
 			services.Add(new ServiceDescriptor(typeof(TClient), typeof(TClient), lifetime));
+
+			return services;
+		}
+
+		public static IServiceCollection AddCommandHandler<TCommand, THandler>(this IServiceCollection services) 
+			where TCommand : class, IClientCommand
+			where THandler : class, IClientCommandHandler<TCommand> {
+			services.AddTransient<IClientCommandHandler<TCommand>, THandler>();
+			services.AddTransient<THandler>();
+
+			return services;
+		}
+
+		public static IServiceCollection AddCommandHandler<TCommand, TResponse, THandler>(this IServiceCollection services)
+			where TCommand : class, IClientCommand<TResponse>
+			where THandler : class, IClientCommandHandler<TCommand, TResponse> {
+			services.AddTransient<IClientCommandHandler<TCommand, TResponse>, THandler>();
+			services.AddTransient<THandler>();
 
 			return services;
 		}

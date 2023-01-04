@@ -2,8 +2,6 @@
 
 using Deveel.Messaging.Commands;
 
-using MediatR;
-
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Deveel.Messaging {
@@ -11,9 +9,8 @@ namespace Deveel.Messaging {
 		public static OcmClientBuilder AddMessaging(this OcmClientBuilder builder, Action<ServiceClientBuilder<MessageClient>>? configure = null) {
 
 			builder.ConfigureClientServices(services => {
-				services.AddMediatR(typeof(SendMessageCommand));
-				//services.AddTransient<IRequestHandler<SendMessageCommand, MessageResult>, SendMessageCommandHandler>();
-				//services.AddTransient<IRequestHandler<SendBatchCommand, MessageBatchResult>, SendBatchCommandHandler>();
+				services.AddCommandHandler<SendMessageCommand, MessageResult, SendMessageCommandHandler>();
+				services.AddCommandHandler<SendBatchCommand, MessageBatchResult, SendBatchCommandHandler>();
 			});
 
 			builder.AddServiceClient<MessageClient>(client => client

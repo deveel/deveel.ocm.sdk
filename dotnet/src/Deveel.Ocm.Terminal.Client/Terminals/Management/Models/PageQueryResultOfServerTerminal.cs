@@ -15,43 +15,49 @@ namespace Deveel.Messaging.Terminals.Management.Models
     public partial class PageQueryResultOfServerTerminal
     {
         /// <summary> Initializes a new instance of PageQueryResultOfServerTerminal. </summary>
-        /// <param name="query"></param>
         /// <param name="totalItems"></param>
         /// <param name="totalPages"></param>
+        /// <param name="query"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        internal PageQueryResultOfServerTerminal(PageQuery query, int totalItems, int totalPages)
+        internal PageQueryResultOfServerTerminal(int totalItems, int totalPages, PageQuery query)
         {
             Argument.AssertNotNull(query, nameof(query));
 
-            Query = query;
             TotalItems = totalItems;
             Items = new ChangeTrackingList<ServerTerminal>();
             TotalPages = totalPages;
+            Query = query;
         }
 
         /// <summary> Initializes a new instance of PageQueryResultOfServerTerminal. </summary>
+        /// <param name="totalItems"></param>
+        /// <param name="items"></param>
+        /// <param name="totalPages"></param>
         /// <param name="query"></param>
         /// <param name="self"></param>
         /// <param name="first"></param>
         /// <param name="next"></param>
         /// <param name="previous"></param>
         /// <param name="last"></param>
-        /// <param name="totalItems"></param>
-        /// <param name="items"></param>
-        /// <param name="totalPages"></param>
-        internal PageQueryResultOfServerTerminal(PageQuery query, Uri self, Uri first, Uri next, Uri previous, Uri last, int totalItems, IReadOnlyList<ServerTerminal> items, int totalPages)
+        internal PageQueryResultOfServerTerminal(int totalItems, IReadOnlyList<ServerTerminal> items, int totalPages, PageQuery query, Uri self, Uri first, Uri next, Uri previous, Uri last)
         {
+            TotalItems = totalItems;
+            Items = items;
+            TotalPages = totalPages;
             Query = query;
             Self = self;
             First = first;
             Next = next;
             Previous = previous;
             Last = last;
-            TotalItems = totalItems;
-            Items = items;
-            TotalPages = totalPages;
         }
 
+        /// <summary> Gets the total items. </summary>
+        public int TotalItems { get; }
+        /// <summary> Gets the items. </summary>
+        public IReadOnlyList<ServerTerminal> Items { get; }
+        /// <summary> Gets the total pages. </summary>
+        public int TotalPages { get; }
         /// <summary> Gets the query. </summary>
         public PageQuery Query { get; }
         /// <summary> Gets the self. </summary>
@@ -64,11 +70,5 @@ namespace Deveel.Messaging.Terminals.Management.Models
         public Uri Previous { get; }
         /// <summary> Gets the last. </summary>
         public Uri Last { get; }
-        /// <summary> Gets the total items. </summary>
-        public int TotalItems { get; }
-        /// <summary> Gets the items. </summary>
-        public IReadOnlyList<ServerTerminal> Items { get; }
-        /// <summary> Gets the total pages. </summary>
-        public int TotalPages { get; }
     }
 }

@@ -21,26 +21,24 @@ namespace Deveel.Messaging.Terminals.Management.Models
         }
 
         /// <summary> Initializes a new instance of ValidationProblemDetails. </summary>
-        /// <param name="errors"> Dictionary of &lt;components·1ctgts0·schemas·validationproblemdetails·properties·errors·additionalproperties&gt;. </param>
         /// <param name="type"></param>
         /// <param name="title"></param>
         /// <param name="status"></param>
         /// <param name="detail"></param>
         /// <param name="instance"></param>
+        /// <param name="errors"> Dictionary of &lt;components·1ctgts0·schemas·validationproblemdetails·properties·errors·additionalproperties&gt;. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ValidationProblemDetails(IReadOnlyDictionary<string, IList<string>> errors, string type, string title, int? status, string detail, string instance, IReadOnlyDictionary<string, object> additionalProperties)
+        internal ValidationProblemDetails(string type, string title, int? status, string detail, string instance, IReadOnlyDictionary<string, IList<string>> errors, IReadOnlyDictionary<string, object> additionalProperties)
         {
-            Errors = errors;
             Type = type;
             Title = title;
             Status = status;
             Detail = detail;
             Instance = instance;
+            Errors = errors;
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Dictionary of &lt;components·1ctgts0·schemas·validationproblemdetails·properties·errors·additionalproperties&gt;. </summary>
-        public IReadOnlyDictionary<string, IList<string>> Errors { get; }
         /// <summary> Gets the type. </summary>
         public string Type { get; }
         /// <summary> Gets the title. </summary>
@@ -51,6 +49,8 @@ namespace Deveel.Messaging.Terminals.Management.Models
         public string Detail { get; }
         /// <summary> Gets the instance. </summary>
         public string Instance { get; }
+        /// <summary> Dictionary of &lt;components·1ctgts0·schemas·validationproblemdetails·properties·errors·additionalproperties&gt;. </summary>
+        public IReadOnlyDictionary<string, IList<string>> Errors { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
