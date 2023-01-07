@@ -11,6 +11,8 @@ namespace Deveel.Messaging.Terminals {
 				services.AddCommandHandler<DeleteTerminalCommand, DeleteTerminalCommandHandler>();
 				services.AddCommandHandler<GetTerminalCommand, ServerTerminal?, GetTerminalCommandHandler>();
 				services.AddCommandHandler<GetTerminalsPageCommand, PagedResult<ServerTerminal>, GetTerminalsPageCommandHandler>();
+				services.AddCommandHandler<ChangeTerminalRoleCommand, ChangeTerminalRoleCommandHandler>();
+				services.AddCommandHandler<ListProvidersCommand, IReadOnlyList<TerminalProvider>, ListProvidersCommandHandler>();
 			});
 
 			builder.AddServiceClient<TerminalClient>(client => client

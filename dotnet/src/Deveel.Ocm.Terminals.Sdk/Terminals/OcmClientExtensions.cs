@@ -20,6 +20,16 @@ namespace Deveel.Messaging.Terminals {
 			=> await client.ExecuteAsync<GetTerminalCommand, ServerTerminal?>(new GetTerminalCommand(terminalId), cancellationToken);
 
 		public static async Task<PagedResult<ServerTerminal>> GetTerminalsPageAsync(this IOcmClient client, int page = 1, int size = 10, string? type = null, IList<string>? sort = null, CancellationToken cancellationToken = default)
-			=> await client.ExecuteAsync<GetTerminalsPageCommand, PagedResult<ServerTerminal>>(new GetTerminalsPageCommand(page, size, type, sort), cancellationToken);
+			=> await client.ExecuteAsync<GetTerminalsPageCommand, PagedResult<ServerTerminal>>(new GetTerminalsPageCommand(new PageRef(page, size), type, sort), cancellationToken);
+
+		public static IAsyncEnumerable<PagedResult<ServerTerminal>> GetTerminalPages(this IOcmClient client, string? type = null) {
+			return new PageEnumerable<ServerTerminal>(async number => await client.GetTerminalsPageAsync(number, 10, type));
+		}
+
+		public static async Task ChangeTerminalRoleAsync(this IOcmClient client, string terminalId, ServerTerminalRoles newRole, CancellationToken cancellationToken = default)
+			=> await client.ExecuteAsync(new ChangeTerminalRoleCommand(terminalId, newRole), cancellationToken);
+
+		public static async Task<IReadOnlyList<TerminalProvider>> ListTerminalProvidersAsync(this IOcmClient client, string? type = null, CancellationToken cancellationToken = default)
+			=> await client.ExecuteAsync<ListProvidersCommand, IReadOnlyList<TerminalProvider>>(new ListProvidersCommand(type), cancellationToken);
 	}
 }

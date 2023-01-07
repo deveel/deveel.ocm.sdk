@@ -14,7 +14,7 @@ namespace Deveel.Messaging {
 		public int Port { get; }
 		private readonly string? _path;
 
-		public SystemBrowser(int? port = null, string? path = null) {
+		public SystemBrowser(short? port = null, string? path = null) {
 			_path = path;
 
 			if (!port.HasValue) {
@@ -23,6 +23,8 @@ namespace Deveel.Messaging {
 				Port = port.Value;
 			}
 		}
+
+		public event EventHandler? Closed;
 
 		private int GetRandomUnusedPort() {
 			var listener = new TcpListener(IPAddress.Loopback, 0);
@@ -51,21 +53,27 @@ namespace Deveel.Messaging {
 			}
 		}
 
-		public static void OpenBrowser(string url) {
+		public void OpenBrowser(string url) {
+			Process? process;
+
 			try {
-				Process.Start(url);
+				process = Process.Start(url);
 			} catch {
 				// hack because of this: https://github.com/dotnet/corefx/issues/10361
 				if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
 					url = url.Replace("&", "^&");
-					Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+					process = Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
 				} else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
-					Process.Start("xdg-open", url);
+					process = Process.Start("xdg-open", url);
 				} else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
-					Process.Start("open", url);
+					process = Process.Start("open", url);
 				} else {
 					throw;
 				}
+			}
+
+			if (process != null && Closed != null) {
+				process.Exited += Closed;
 			}
 		}
 	}
@@ -85,7 +93,7 @@ namespace Deveel.Messaging {
 			if (!path.StartsWith("/"))
 				path = $"/{path}";
 
-			_url = $"https://127.0.0.1:{port}";
+			_url = $"http://127.0.0.1:{port}";
 
 			_host = new WebHostBuilder()
 				.UseKestrel()

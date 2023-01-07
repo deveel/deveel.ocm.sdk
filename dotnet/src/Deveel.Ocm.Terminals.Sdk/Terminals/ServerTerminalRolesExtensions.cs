@@ -8,7 +8,7 @@ namespace Deveel.Messaging.Terminals {
 				var x when x == Management.Models.TerminalRoles.Receiver => ServerTerminalRoles.Receiver,
 				var x when x == Management.Models.TerminalRoles.Sender => ServerTerminalRoles.Sender,
 				var x when x == Management.Models.TerminalRoles.Both => ServerTerminalRoles.Both,
-				_ => throw new NotSupportedException($"Terminal type '{roles}' is not supported")
+				_ => throw new NotSupportedException($"Terminal role '{roles}' is not supported")
 			};
 		}
 

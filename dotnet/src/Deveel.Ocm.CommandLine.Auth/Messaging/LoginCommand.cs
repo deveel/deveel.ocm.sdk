@@ -45,15 +45,18 @@ namespace Deveel.Messaging {
 				=> InvokeAsync(context).ConfigureAwait(false).GetAwaiter().GetResult();
 
 			public async Task<int> InvokeAsync(InvocationContext context) {
-				var browser = new SystemBrowser(path: "callback");
-				string redirectUri = string.Format($"https://127.0.0.1:{browser.Port}/callback");
+				var browser = new SystemBrowser(6122, path: "callback");
+				string redirectUri = string.Format($"http://127.0.0.1:{browser.Port}/callback");
 
 				var user = context.ParseResult.GetValueForOption(UserOption);
 
 				if (String.IsNullOrWhiteSpace(user)) {
+					var authority = configuration["Auth:Authority"];
+					var clientId = configuration["Auth:ClientId"];
+
 					var options = new OidcClientOptions {
-						Authority = "https://deveel.eu.auth0.com",
-						ClientId = "EBoravU8hMZmqwBUn2KvNcivD74Uet0a",
+						Authority = authority,
+						ClientId = clientId,
 						RedirectUri = redirectUri,
 						// TODO: give the full set of scopes here (or a more accurate list)
 						Scope = "openid profile api offline_access",

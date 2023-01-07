@@ -12,9 +12,10 @@ namespace Deveel.Messaging.Terminals.Commands {
 		}
 
 		public async Task<PagedResult<ServerTerminal>> HandleAsync(GetTerminalsPageCommand command, CancellationToken cancellationToken = default) {
-			var page = await client.GetTerminalPageAsync(command.Type, command.PageNumber, command.PageSize, command.Sort, cancellationToken);
+			var page = await client.GetTerminalPageAsync(command.Type, command.Page.Number, command.Page.Size, command.Sort, cancellationToken);
 
-			return PagedResult<ServerTerminal>.Create(page.Value.TotalItems, page.Value.Items?.Select(x => ServerTerminal.FromClient(x)));
+			var result = page.Value;
+			return PagedResult<ServerTerminal>.Create(command.Page, result.TotalItems, result.Items?.Select(x => ServerTerminal.FromClient(x)));
 		}
 	}
 }

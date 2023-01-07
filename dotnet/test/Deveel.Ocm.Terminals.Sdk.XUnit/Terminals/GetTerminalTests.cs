@@ -21,7 +21,7 @@ namespace Deveel.Messaging.Terminals {
 			var client = clientBuilder
 				.AddTerminalManagement(terminals => terminals
 					.UseSettings(settings => settings.UseHttpClient(HttpCallbackHandler.Create(request => {
-						var id = HttpUtility.ParseQueryString(request.RequestUri.Query)["id"];
+						var id = request.RequestUri.GetQueryValue("id");
 
 						return new HttpResponseMessage(HttpStatusCode.OK) {
 							Content = JsonContent.Create(new {
@@ -53,5 +53,69 @@ namespace Deveel.Messaging.Terminals {
 
 			terminal.Should().BeNull();
 		}
+
+		[Fact]
+		public async Task GetTerminalsPage() {
+			var client = clientBuilder
+				.AddTerminalManagement(terminals => terminals
+				.UseSettings(settings => settings.UseHttpClient(HttpCallbackHandler.Create(request => {
+					var page = request.RequestUri.GetQueryValue<int>("p");
+					var count = request.RequestUri.GetQueryValue<int>("c");
+					
+					return new HttpResponseMessage(HttpStatusCode.OK) {
+						Content = JsonContent.Create(new {
+							totalItems = 12,
+							request = new {
+								c = count,
+								p = page
+							},
+							items = new[] {
+								new { id = Guid.NewGuid().ToString("N"), provider = "twilio", type = "phoneNumber", address = "+1800349944", role = "both" }
+							} 
+						})
+					};
+				}))))
+				.Build();
+
+			var page = await client.GetTerminalsPageAsync();
+
+			page.Should().NotBeNull();
+			page.TotalItems.Should().BeGreaterThan(0).And.Be(12);
+			page.Items.Should().NotBeNullOrEmpty();
+		}
+
+		[Fact]
+		public async Task GetTerminalsPageEnumerable() {
+			var client = clientBuilder
+				.AddTerminalManagement(terminals => terminals
+				.UseSettings(settings => settings.UseHttpClient(HttpCallbackHandler.Create(request => {
+					var page = request.RequestUri.GetQueryValue<int>("p");
+					var count = request.RequestUri.GetQueryValue<int>("c");
+
+					return new HttpResponseMessage(HttpStatusCode.OK) {
+						Content = JsonContent.Create(new {
+							totalItems = 12,
+							request = new {
+								p = page,
+								c = count,
+								type = request.RequestUri.GetQueryValue("type")
+							},
+							items = new[] {
+								new { id = Guid.NewGuid().ToString("N"), provider = "twilio", type = "phoneNumber", address = "+1800349944", role = "both" }
+							}
+						})
+					};
+				}))))
+				.Build();
+
+			var pages = client.GetTerminalPages();
+
+			await foreach(var page in pages) {
+				page.Should().NotBeNull();
+				page.TotalItems.Should().BeGreaterThan(0).And.Be(12);
+				page.Items.Should().NotBeNullOrEmpty();
+			}
+		}
+
 	}
 }
