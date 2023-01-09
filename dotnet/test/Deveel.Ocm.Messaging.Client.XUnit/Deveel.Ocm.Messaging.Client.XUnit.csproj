@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Deveel.Ocm.Client.Testing\Deveel.Ocm.Client.Testing.csproj" />
-    <ProjectReference Include="..\..\src\Deveel.Ocm.Sdk\Deveel.Ocm.Sdk.csproj" />
+    <ProjectReference Include="..\..\src\Deveel.Ocm.Messaging.Client\Deveel.Ocm.Messaging.Client.csproj" />
   </ItemGroup>
 
 </Project>
