@@ -14,12 +14,16 @@ namespace Deveel.Messaging {
 					throw new OcmClientException($"The command {typeof(TCommand)} is not handled");
 
 				return await handler.HandleAsync(command, cancellationToken);
-			} catch (RequestFailedException ex) when(ex.Status == 403) {
+			} catch (RequestFailedException ex) when (ex.Status == 403) {
 				throw new ServiceAuthorizationException("The client is not authorized to perform the request", ex);
-			} catch(RequestFailedException ex) when (ex.Status == 401) {
+			} catch (RequestFailedException ex) when (ex.Status == 401) {
 				throw new ServiceAuthenticationException("The client is not authenticated", ex);
-			} catch(RequestFailedException ex) when(ex.Status == 400) {
+			} catch (RequestFailedException ex) when (ex.Status == 400) {
 				throw new RequestValidationException("The request is invalid: see the inner exception for details", ex);
+			} catch(RequestFailedException ex) {
+				throw new OcmServiceException("An error occurred on the service while executing the command", ex);
+			} catch (OcmServiceException) {
+				throw;
 			} catch(OcmClientException) {
 				throw;
 			} catch(Exception ex) {
@@ -41,7 +45,11 @@ namespace Deveel.Messaging {
 				throw new ServiceAuthenticationException("The client is not authenticated", ex);
 			} catch (RequestFailedException ex) when (ex.Status == 400) {
 				throw new RequestValidationException("The request is invalid: see the inner exception for details", ex);
+			} catch(RequestFailedException ex) {
+				throw new OcmServiceException("An error occurred on the service while executing the command", ex);
 			} catch (OcmClientException) {
+				throw;
+			} catch(OcmServiceException) {
 				throw;
 			} catch (Exception ex) {
 				throw new OcmClientException("Unknown error on the client", ex);

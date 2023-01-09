@@ -3,11 +3,6 @@
 namespace Deveel.Messaging.Channels {
 	public sealed class UserChannel {
 		public UserChannel(ChannelName name, ChannelType type, ChannelProvider provider) {
-			if (string.IsNullOrWhiteSpace(name))
-				throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
-
-			// TODO: validate the name for a fast-fail on the client-side
-
 			Name = name;
 			Type = type;
 			Provider = provider;
@@ -39,11 +34,11 @@ namespace Deveel.Messaging.Channels {
 			};
 		}
 
-		internal static Management.Models.NewUserChannel ToNewChannel(UserChannel channel) {
-			return new NewUserChannel(channel.Name, channel.Type.AsClientChannelType(), AsClientChannelProvider(channel.Provider), channel.Directions.AsClientDirections()) {
-				Context = channel.Context,
-				Settings = channel.Settings,
-				ContentTypes = channel.ContentTypes?.Select(x => x.AsClientMessageContentType()).ToArray(),
+		internal Management.Models.NewUserChannel ToNewChannel() {
+			return new NewUserChannel(Name, Type.AsClientChannelType(), AsClientChannelProvider(Provider), Directions.AsClientDirections()) {
+				Context = Context,
+				Settings = Settings,
+				ContentTypes = ContentTypes?.Select(x => x.AsClientMessageContentType()).ToArray(),
 			};
 		}
 

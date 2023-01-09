@@ -38,6 +38,8 @@ namespace Deveel.Messaging.Terminals {
 		}
 
 		public ServerTerminalBuilder WithContext(IDictionary<string, object> context) {
+			// TODO: validate the setting value is of the accepted types
+
 			this.context = context ?? throw new ArgumentNullException(nameof(context));
 
 			return this;

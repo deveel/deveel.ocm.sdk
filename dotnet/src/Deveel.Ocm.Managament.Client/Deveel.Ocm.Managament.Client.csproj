@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Deveel.Ocm.Webhook.Client\Deveel.Ocm.Webhook.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Messaging\Routes\" />
+  </ItemGroup>
+
 </Project>

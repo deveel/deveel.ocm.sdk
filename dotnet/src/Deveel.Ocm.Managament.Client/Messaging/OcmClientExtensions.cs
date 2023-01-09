@@ -39,6 +39,18 @@ namespace Deveel.Messaging {
 
 		#endregion
 
+		#region Channels
+
+		public static Task<UserChannel> CreateChannelAsync(this IOcmClient client, UserChannel channel, CancellationToken cancellationToken = default)
+			=> client.ExecuteAsync<CreateChannelCommand, UserChannel>(new CreateChannelCommand(channel), cancellationToken);
+
+		public static async Task<UserChannel> CreateChannelAsync(this IOcmClient client, Action<UserChannelBuilder> configure, CancellationToken cancellationToken = default) {
+			var builder = new UserChannelBuilder();
+			configure(builder);
+
+			return await client.CreateChannelAsync(builder.Build(), cancellationToken);
+		}
+
 		public static Task<UserChannel?> FindChannelByIdAsync(this IOcmClient client, string channelId, CancellationToken cancellationToken = default)
 			=> client.ExecuteAsync<GetUserChannelCommand, UserChannel?>(new GetUserChannelCommand(channelId), cancellationToken);
 
@@ -47,5 +59,10 @@ namespace Deveel.Messaging {
 
 		public static Task<IReadOnlyList<ChannelSchema>> ListChannelSchemaAsync(this IOcmClient client, string? provider = null, CancellationToken cancellationToken = default)
 			=> client.ExecuteAsync<ListChannelSchemaCommand, IReadOnlyList<ChannelSchema>>(new ListChannelSchemaCommand(provider), cancellationToken);
+
+		public static Task DeleteChannelAsync(this IOcmClient client, string channelId, CancellationToken cancellationToken = default)
+			=> client.ExecuteAsync(new DeleteChannelCommand(channelId), cancellationToken);
+
+		#endregion
 	}
 }

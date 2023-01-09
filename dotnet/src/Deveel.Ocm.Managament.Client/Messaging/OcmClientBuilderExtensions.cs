@@ -30,7 +30,9 @@ namespace Deveel.Messaging {
 		public static OcmClientBuilder AddChannelManagement(this OcmClientBuilder builder, Action<ServiceClientBuilder<ChannelClient>>? configure = null) {
 			builder.ConfigureClientServices(services => {
 				services.AddCommandHandler<ListChannelSchemaCommand, IReadOnlyList<ChannelSchema>, ListChannelSchemaCommandHandler>();
+				services.AddCommandHandler<CreateChannelCommand, UserChannel, CreateChannelCommandHandler>();
 				services.AddCommandHandler<GetUserChannelCommand, UserChannel?, GetUserChannelCommandHandler>();
+				services.AddCommandHandler<DeleteChannelCommand, DeleteChannelCommandHandler>();
 			});
 
 			builder.AddServiceClient<ChannelClient>(client => client.UseFactory<ChannelClientFactory>().Configure(configure));
